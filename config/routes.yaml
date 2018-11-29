@@ -1,3 +1,14 @@
 index:
     path: /
     controller: App\Infrastructure\ThingController::index
+    methods: GET
+
+search:
+    path: /{id}
+    controller: App\Infrastructure\ThingController::search
+    methods: POST
+
+delete:
+    path: /{id}
+    controller: App\Infrastructure\ThingController::delete
+    methods: DELETE
