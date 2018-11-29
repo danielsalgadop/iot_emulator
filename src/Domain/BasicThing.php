@@ -4,7 +4,7 @@
 namespace App\Domain;
 
 
-class BasicIot
+class BasicThing
 {
     private $brand;
     private $model;

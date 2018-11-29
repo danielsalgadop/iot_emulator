@@ -2,9 +2,9 @@
 
 
 namespace App\Domain;
-use App\Domain\BasicIot;
+use App\Domain\BasicThing;
 
-class Iot extends BasicIot
+class Thing extends BasicThing
 {
     public function something(){
         print "something called";
