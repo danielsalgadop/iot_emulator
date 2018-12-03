@@ -12,3 +12,7 @@ delete:
     path: /{id}
     controller: App\Infrastructure\ThingController::delete
     methods: DELETE
+
+ddbb:
+    path: /ddbb
+    controller: App\Infrastructure\ThingController::ddbb

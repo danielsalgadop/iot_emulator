@@ -6,12 +6,8 @@ namespace App\Domain;
 
 class BasicThing
 {
-    private $brand;
-    private $model;
 
-    public function __construct(string $brand, string $model)
+    public function __construct()
     {
-        $this->brand = $brand;
-        $this->model = $model;
     }
 }
