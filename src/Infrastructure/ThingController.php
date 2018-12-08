@@ -33,14 +33,14 @@ class ThingController extends AbstractController
         return new JsonResponse(["will delete this id"=>$id]);
     }
 
-    public function ddbb(EntityManagerInterface $em)
+    public function create(EntityManagerInterface $em)
     {
         $thing = new Thing();
         $thing->setBrand(date('H:i:s')); // mocking brand name (it is only a date, I know)
         $em->persist($thing);
         $em->flush();
-//        return new Response("ddbb updated - thing created with this id " . $thing->id);
-        return new Response("ddbb updated - thing created with this id ");
+        return new Response("ddbb updated - thing created with this id " . $thing->getId());
+//        return new Response("ddbb updated - thing created with this id ");
     }
 
 }

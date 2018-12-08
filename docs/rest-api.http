@@ -17,3 +17,8 @@ Cache-Control: no-cache
 DELETE http://localhost:8000/1
 
 ###
+
+GET http://localhost:8000/create/
+
+###
+
