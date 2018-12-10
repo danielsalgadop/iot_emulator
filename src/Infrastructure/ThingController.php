@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Domain\Entity\Thing;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Domain\Command\Thing\CreateThingCommand;
-use App\Domain\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
+use App\Aplication\Command\Thing\CreateThingCommand;
+use App\Aplication\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
 
 //use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,6 +39,12 @@ class ThingController extends AbstractController
     {
         $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']));
         $commandHandler = new CreateThingHandler();
+        try{
+            $commandHandler->execute($command);
+        } catch (Exception $e) {
+            return new JsonResponse(['error' => 'An application error has occurred'], 500);
+        }
+
         $thing = new Thing();
         $thing->setBrand(date('H:i:s')); // mocking brand name (it is only a date, I know)
         $em->persist($thing);

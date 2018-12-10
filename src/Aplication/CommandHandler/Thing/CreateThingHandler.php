@@ -4,7 +4,7 @@ namespace App\Aplication\CommandHandler\Thing;
 
 
 use App\Application\Command\Thing\CreateThingCommand;
-use App\Domain\Thing;
+use App\Domain\Entity\Thing;
 use App\Domain\Repository\ThingRepository;
 
 class CreateThingHandler
@@ -18,7 +18,8 @@ class CreateThingHandler
 
     public function handle(CreateThingCommand $command):Thing
     {
-        $thing = Thing::create($command->title(), $command->body());
+//        $thing = Thing::create($command->title(), $command->body());
+        $thing = new Thing($command->json);
         $this->thingRepository->save($thing);
         return $thing;
     }

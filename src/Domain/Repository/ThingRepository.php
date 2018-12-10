@@ -1,8 +1,8 @@
 <?php
 namespace App\Domain\Repository;
-use App\Domain\Thing;
+use App\Domain\Entinty\Thing;
 
 interface ThingRepository
 {
-    public function create(Thing $thing):void;
+    public function create(Thing $thing);
 }
