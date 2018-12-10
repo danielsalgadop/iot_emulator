@@ -20,6 +20,7 @@ class MySQLThingRepository implements ThingRepository
     {
         try {
             $this->em->persist($thing);
+            $this->em->flush();
         } catch (Exception $e) {
             return $e->getMessage();
         }

@@ -20,6 +20,7 @@ class CreateThingHandler
     {
 //        $thing = Thing::create($command->title(), $command->body());
         $thing = new Thing($command->getJson());
+        $thing->setBrand(date('H:i:s')); // mocking brand name (it is only a date, I know)
         $this->thingRepository->save($thing);
         return $thing;
     }

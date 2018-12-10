@@ -41,17 +41,15 @@ class ThingController extends AbstractController
         $MySqlThingRepository = new MySQLThingRepository($em);
         $commandHandler = new CreateThingHandler($MySqlThingRepository);
         try{
-            $commandHandler->handle($command);
+            $thing = $commandHandler->handle($command);
         } catch (Exception $e) {
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
         }
 
 //        $thing = new Thing();
 //        $thing->setBrand(date('H:i:s')); // mocking brand name (it is only a date, I know)
-//        $em->persist($thing);
-//        $em->flush();
-//        return new Response("ddbb updated - thing created with this id " . $thing->getId());
-        return new Response("ddbb updated - thing created - probablemente esto sea mentira ");
+        return new Response("ddbb updated - thing created with this id " . $thing->getId());
+//        return new Response("ddbb updated - thing created - probablemente esto sea mentira ");
     }
 
 }
