@@ -4,5 +4,5 @@ use App\Domain\Entity\Thing;
 
 interface ThingRepository
 {
-    public function create(Thing $thing);
+    public function save(Thing $thing);
 }

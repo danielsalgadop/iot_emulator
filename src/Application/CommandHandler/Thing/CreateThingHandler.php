@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Aplication\CommandHandler\Thing;
+namespace App\Application\CommandHandler\Thing;
 
 
 use App\Application\Command\Thing\CreateThingCommand;
@@ -19,7 +19,7 @@ class CreateThingHandler
     public function handle(CreateThingCommand $command):Thing
     {
 //        $thing = Thing::create($command->title(), $command->body());
-        $thing = new Thing($command->json);
+        $thing = new Thing($command->getJson());
         $this->thingRepository->save($thing);
         return $thing;
     }

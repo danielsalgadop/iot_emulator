@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Aplication\Command\Thing;
+namespace App\Application\Command\Thing;
 
 
 class CreateThingCommand
@@ -10,5 +10,9 @@ class CreateThingCommand
     public function __construct($json)
     {
         $this->json = $json;
+    }
+    public function getJson()
+    {
+        return $this->json;
     }
 }

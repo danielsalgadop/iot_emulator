@@ -16,7 +16,7 @@ class MySQLThingRepository implements ThingRepository
         $this->em = $entityManager;
     }
 
-    public function create(Thing $thing)
+    public function save(Thing $thing)
     {
         try {
             $this->em->persist($thing);
