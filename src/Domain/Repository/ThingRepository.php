@@ -1,7 +1,8 @@
 <?php
 namespace App\Domain\Repository;
+use App\Domain\Thing;
 
-class ThingRepository
+interface ThingRepository
 {
-
+    public function create(Thing $thing):void;
 }
