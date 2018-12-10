@@ -1,6 +1,6 @@
 <?php
 namespace App\Domain\Repository;
-use App\Domain\Entinty\Thing;
+use App\Domain\Entity\Thing;
 
 interface ThingRepository
 {
