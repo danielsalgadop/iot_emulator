@@ -8,10 +8,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 //use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use App\Domain\Entity\Thing;
+//use App\Domain\Entity\Thing;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Application\Command\Thing\CreateThingCommand;
-use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
+//use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
 use App\Infrastructure\MySQLThingRepository;
 //use Symfony\Component\Routing\Annotation\Route;
 
@@ -38,16 +38,18 @@ class ThingController extends AbstractController
     public function create(EntityManagerInterface $em)
     {
         $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']));
-        $MySqlThingRepository = new MySQLThingRepository($em);
-        $commandHandler = new CreateThingHandler($MySqlThingRepository);
+//        $MySqlThingRepository = $this->get('app.repository.thing');
+//      $MySqlThingRepository = new MySQLThingRepository($em);
+
+
+//        $commandHandler = new CreateThingHandler($MySqlThingRepository);
+        $commandHandler = $this->get('app.command_handler.create_thing');
         try{
             $thing = $commandHandler->handle($command);
         } catch (Exception $e) {
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
         }
 
-//        $thing = new Thing();
-//        $thing->setBrand(date('H:i:s')); // mocking brand name (it is only a date, I know)
         return new Response("ddbb updated - thing created with this id " . $thing->getId());
 //        return new Response("ddbb updated - thing created - probablemente esto sea mentira ");
     }
