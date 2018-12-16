@@ -3,7 +3,7 @@
 
 namespace App\Domain\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use App\Domain\Thing;
+//use App\Domain\Entity\Thing;
 
 class Action
 {
@@ -19,6 +19,16 @@ class Action
      * @ORM\ManyToOne(targetEntity="App\Domain\Entity\Thing", inversedBy="actions")
      */
     private $idThing;
+
+    public function getIdThing()
+    {
+        return $this->idThing;
+    }
+
+    public function setIdThing($idThing): void
+    {
+        $this->idThing = $idThing;
+    }
 
     /**
      * @ORM\Column(type="string", length=255)
