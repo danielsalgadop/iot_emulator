@@ -5,6 +5,8 @@ namespace App\Infrastructure;
 
 //use http\Env\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 //use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,7 @@ use App\Application\Command\Thing\CreateThingCommand;
 use App\Infrastructure\MySQLThingRepository;
 //use Symfony\Component\Routing\Annotation\Route;
 
-class ThingController extends AbstractController
+class ThingController extends Controller
 {
 
     public function index(): JsonResponse
