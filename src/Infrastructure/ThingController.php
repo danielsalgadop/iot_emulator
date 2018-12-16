@@ -40,11 +40,6 @@ class ThingController extends Controller
     public function create(EntityManagerInterface $em)
     {
         $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']));
-//        $MySqlThingRepository = $this->get('app.repository.thing');
-//      $MySqlThingRepository = new MySQLThingRepository($em);
-
-
-//        $commandHandler = new CreateThingHandler($MySqlThingRepository);
         $commandHandler = $this->get('app.command_handler.create_thing');
         try{
             $thing = $commandHandler->handle($command);
