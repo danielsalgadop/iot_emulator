@@ -5,6 +5,9 @@ namespace App\Domain\Entity;
 use Doctrine\ORM\Mapping as ORM;
 //use App\Domain\Entity\Thing;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\ActionRepository")
+ */
 class Action
 {
     /**
