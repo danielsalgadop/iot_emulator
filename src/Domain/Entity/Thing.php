@@ -42,12 +42,15 @@ class Thing extends BasicThing
         return $this->actions;
     }
 
-    public function setActions($actions): void
+    public function removeActions($actions): void
     {
         $this->actions = $actions;
     }
 
-
+    public function addActions($actions): void
+    {
+        $this->actions = $actions;
+    }
 
     public function getId()
     {
