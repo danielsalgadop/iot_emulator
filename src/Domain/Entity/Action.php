@@ -1,5 +1,9 @@
 <?php
-
+/*
+ *
+ * 1 acción tiene 1 solo Thing
+ * aqui debe vivir un idThing
+ */
 
 namespace App\Domain\Entity;
 use Doctrine\ORM\Mapping as ORM;

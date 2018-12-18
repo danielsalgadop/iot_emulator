@@ -1,4 +1,8 @@
 <?php
+/*
+ * 1 Thing tiene N acciones.  OnetoMany
+ * aqui debe vivir un array de acciones
+ * */
 namespace App\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
