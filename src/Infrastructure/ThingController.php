@@ -4,6 +4,7 @@
 namespace App\Infrastructure;
 
 //use http\Env\Response;
+use App\Domain\Entity\Action;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,7 +40,9 @@ class ThingController extends Controller
 
     public function create(EntityManagerInterface $em)
     {
-        $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']));
+        $action = new \App\Domain\Entity\Action();
+        $action->setAction('accionHardcodeada');
+        $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']),$action);
         $commandHandler = $this->get('app.command_handler.create_thing');
         try{
             $thing = $commandHandler->handle($command);

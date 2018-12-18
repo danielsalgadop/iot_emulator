@@ -51,7 +51,7 @@ class Thing extends BasicThing
         $this->actions = $actions;
     }
 
-    public function addActions($actions): void
+    public function setActions($actions): void
     {
         $this->actions = $actions;
     }
