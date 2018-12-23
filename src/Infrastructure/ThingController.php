@@ -4,6 +4,7 @@
 namespace App\Infrastructure;
 
 //use http\Env\Response;
+use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -11,11 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 //use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-//use App\Domain\Entity\Thing;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Application\Command\Thing\CreateThingCommand;
 //use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
-use App\Infrastructure\MySQLThingRepository;
+//use App\Infrastructure\MySQLThingRepository;
 //use Symfony\Component\Routing\Annotation\Route;
 
 class ThingController extends Controller
