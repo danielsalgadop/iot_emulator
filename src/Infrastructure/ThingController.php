@@ -8,6 +8,7 @@ use App\Application\CommandHandler\Thing\CreateThingHandler;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
 use App\Domain\Repository\ThingRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,10 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Application\Command\Thing\CreateThingCommand;
 //use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
-//use App\Infrastructure\MySQLThingRepository;
+use App\Infrastructure\MySQLThingRepository;
 //use Symfony\Component\Routing\Annotation\Route;
 
-
+//use Doctrine\ORM\EntityManager;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 //$registry = new Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -57,18 +58,19 @@ class ThingController extends Controller
 //        $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']),$action);
 //        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 
-//        $registry = new ServiceEntityRepository;
+//        $thingRepository= $this->get('app.repository.thing');
 
 //        $thingRepository = new ThingRepository($registry);
 //        $createThingCommandHandler = new CreateThingHandler($thingRepository);
-//        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
-//        try{
-//            $time = time();
-//           $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time]),['actionName1'.$time,'actionName2'.$time]);
-//            $thing = $createThingCommandHandler->handle($command);
-//        } catch (Exception $e) {
-//            return new JsonResponse(['error' => 'An application error has occurred'], 500);
-//        }
+        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
+
+        try{
+            $time = time();
+           $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time]),['actionName1'.$time,'actionName2'.$time]);
+            $thing = $createThingCommandHandler->handle($command);
+        } catch (Exception $e) {
+            return new JsonResponse(['error' => 'An application error has occurred'], 500);
+        }
 //
 //        return new Response($thing->getId());
 //        return new Response("ddbb updated - thing created with this id " . $thing->getId());

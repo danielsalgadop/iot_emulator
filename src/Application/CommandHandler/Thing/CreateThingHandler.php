@@ -17,26 +17,31 @@ class CreateThingHandler
         $this->thingRepository = $thingRepository;
     }
 
-    public function handle():Thing
-//    public function handle(CreateThingCommand $command):Thing
+//    public function handle():Thing
+    public function handle(CreateThingCommand $command):Thing
     {
         $thing = new Thing();
 
 
-        $thing->setBrand("branding setting".time());
+        $thing->setBrand(date('H:i:s')); // mocking brand name (it is only a date, I know)
 
-        $action1 = new Action();
-        $action1->setName("hardcodedAction1");
-        $action2 = new Action();
-        $action2->setName("hardcodedAction2");
+
+        foreach ($command->getActions() as $action) {
+            $action1 = new Action();
+            $action1->setName($action);
+
+        }
+//        $action2 = new Action();
+//        $action2->setName("hardcodedAction2");
         $thing->addAction($action1);
-        $thing->addAction($action2);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($thing);
-        $entityManager->persist($action1);
-        $entityManager->persist($action2);
-        $entityManager->flush();
+//        $thing->addAction($action2);
+//
+        $this->thingRepository->save($thing);
+//        $entityManager = $this->getDoctrine()->getManager();
+//        $entityManager->persist($thing);
+//        $entityManager->persist($action1);
+//        $entityManager->persist($action2);
+//        $entityManager->flush();
         return $thing;
 
 //        $thing = Thing::create($command->title(), $command->body());
