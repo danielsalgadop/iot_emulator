@@ -6,7 +6,8 @@ namespace App\Application\CommandHandler\Thing;
 use App\Application\Command\Thing\CreateThingCommand;
 use App\Domain\Entity\Action;
 use App\Domain\Entity\Thing;
-use App\Domain\Repository\ThingRepository;
+//use App\Domain\Repository\ThingRepository;
+//use Doctrine\ORM\EntityManager;
 
 class CreateThingHandler
 {
@@ -25,20 +26,27 @@ class CreateThingHandler
 
         $thing->setBrand(date('H:i:s')); // mocking brand name (it is only a date, I know)
 
-
-        foreach ($command->getActions() as $action) {
-            $action1 = new Action();
-            $action1->setName($action);
-
-        }
-//        $action2 = new Action();
-//        $action2->setName("hardcodedAction2");
-        $thing->addAction($action1);
-//        $thing->addAction($action2);
 //
+//        foreach ($command->getActions() as $action) {
+//            $action1 = new Action();
+//            $action1->setName($action);
+//
+//        }
+//        $thing->addAction($action1);
+
+        $action2 = new Action();
+        $action2->setName("hardcodedAction2");
+        $thing->addAction($action2);
+
+
+        //
         $this->thingRepository->save($thing);
 //        $entityManager = $this->getDoctrine()->getManager();
+//        $entityManager = new EntityManager();
+
+
 //        $entityManager->persist($thing);
+
 //        $entityManager->persist($action1);
 //        $entityManager->persist($action2);
 //        $entityManager->flush();

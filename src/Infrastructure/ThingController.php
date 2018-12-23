@@ -52,27 +52,19 @@ class ThingController extends Controller
     {
 
 
-//
-//        $action = new \App\Domain\Entity\Action();
-//        $action->setAction('accionHardcodeada');
-//        $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']),$action);
-//        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
-
-//        $thingRepository= $this->get('app.repository.thing');
-
+        $thingRepository= $this->get('app.repository.thing');
+//        var_dump($thingRepository);
 //        $thingRepository = new ThingRepository($registry);
-//        $createThingCommandHandler = new CreateThingHandler($thingRepository);
-        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
+        $createThingCommandHandler = new CreateThingHandler($thingRepository);
+//        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 
         try{
             $time = time();
-           $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time]),['actionName1'.$time,'actionName2'.$time]);
+            $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time]),['actionName1'.$time,'actionName2'.$time]);
             $thing = $createThingCommandHandler->handle($command);
         } catch (Exception $e) {
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
         }
-//
-//        return new Response($thing->getId());
 //        return new Response("ddbb updated - thing created with this id " . $thing->getId());
         return new Response("no hay magia aqui");
     }
