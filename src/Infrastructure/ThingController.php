@@ -38,20 +38,33 @@ class ThingController extends Controller
         return new JsonResponse(["will delete this id"=>$id]);
     }
 
-    public function create(EntityManagerInterface $em)
+    public function create()
     {
-        $action = new \App\Domain\Entity\Action();
-        $action->setAction('accionHardcodeada');
-        $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']),$action);
-        $commandHandler = $this->get('app.command_handler.create_thing');
-        try{
-            $thing = $commandHandler->handle($command);
-        } catch (Exception $e) {
-            return new JsonResponse(['error' => 'An application error has occurred'], 500);
-        }
 
-        return new Response("ddbb updated - thing created with this id " . $thing->getId());
-//        return new Response("ddbb updated - thing created - probablemente esto sea mentira ");
+        $thing = new Thing();
+        $thing->setBrand("branding setting".time());
+
+        $action = new Action();
+        $action->setName("hardcodedAction");
+        $thing->addAction($action);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($thing);
+        $entityManager->persist($action);
+        $entityManager->flush();
+        return new Response($thing->getId());
+//
+//        $action = new \App\Domain\Entity\Action();
+//        $action->setAction('accionHardcodeada');
+//        $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']),$action);
+//        $commandHandler = $this->get('app.command_handler.create_thing');
+//        try{
+//            $thing = $commandHandler->handle($command);
+//        } catch (Exception $e) {
+//            return new JsonResponse(['error' => 'An application error has occurred'], 500);
+//        }
+//
+//        return new Response("ddbb updated - thing created with this id " . $thing->getId());
     }
 
 }
