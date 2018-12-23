@@ -44,13 +44,17 @@ class ThingController extends Controller
         $thing = new Thing();
         $thing->setBrand("branding setting".time());
 
-        $action = new Action();
-        $action->setName("hardcodedAction");
-        $thing->addAction($action);
+        $action1 = new Action();
+        $action1->setName("hardcodedAction1");
+        $action2 = new Action();
+        $action2->setName("hardcodedAction2");
+        $thing->addAction($action1);
+        $thing->addAction($action2);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($thing);
-        $entityManager->persist($action);
+        $entityManager->persist($action1);
+        $entityManager->persist($action2);
         $entityManager->flush();
         return new Response($thing->getId());
 //
