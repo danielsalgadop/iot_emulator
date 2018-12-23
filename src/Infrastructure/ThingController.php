@@ -4,8 +4,10 @@
 namespace App\Infrastructure;
 
 //use http\Env\Response;
+use App\Application\CommandHandler\Thing\CreateThingHandler;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
+use App\Domain\Repository\ThingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,6 +19,13 @@ use App\Application\Command\Thing\CreateThingCommand;
 //use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
 //use App\Infrastructure\MySQLThingRepository;
 //use Symfony\Component\Routing\Annotation\Route;
+
+
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+//$registry = new Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+
+
+
 
 class ThingController extends Controller
 {
@@ -41,34 +50,29 @@ class ThingController extends Controller
     public function create()
     {
 
-        $thing = new Thing();
-        $thing->setBrand("branding setting".time());
 
-        $action1 = new Action();
-        $action1->setName("hardcodedAction1");
-        $action2 = new Action();
-        $action2->setName("hardcodedAction2");
-        $thing->addAction($action1);
-        $thing->addAction($action2);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($thing);
-        $entityManager->persist($action1);
-        $entityManager->persist($action2);
-        $entityManager->flush();
-        return new Response($thing->getId());
 //
 //        $action = new \App\Domain\Entity\Action();
 //        $action->setAction('accionHardcodeada');
 //        $command = new CreateThingCommand(json_encode(['hardcoded' => 'hc']),$action);
-//        $commandHandler = $this->get('app.command_handler.create_thing');
+//        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
+
+//        $registry = new ServiceEntityRepository;
+
+//        $thingRepository = new ThingRepository($registry);
+//        $createThingCommandHandler = new CreateThingHandler($thingRepository);
+//        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 //        try{
-//            $thing = $commandHandler->handle($command);
+//            $time = time();
+//           $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time]),['actionName1'.$time,'actionName2'.$time]);
+//            $thing = $createThingCommandHandler->handle($command);
 //        } catch (Exception $e) {
 //            return new JsonResponse(['error' => 'An application error has occurred'], 500);
 //        }
 //
+//        return new Response($thing->getId());
 //        return new Response("ddbb updated - thing created with this id " . $thing->getId());
+        return new Response("no hay magia aqui");
     }
 
 }
