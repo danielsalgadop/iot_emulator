@@ -52,17 +52,16 @@ class ThingController extends Controller
     {
 
 
-        $thingRepository= $this->get('app.repository.thing');
-//        var_dump($thingRepository);
-//        $thingRepository = new ThingRepository($registry);
-        $createThingCommandHandler = new CreateThingHandler($thingRepository);
-//        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
+//        $thingRepository= $this->get('app.repository.thing');
+//         = new CreateThingHandler($thingRepository);
+           $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 
         try{
             $time = time();
             $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time,"actions" => ['hardcodedAction1','hardcodedAction2']]));
             $thing = $createThingCommandHandler->handle($command);
         } catch (Exception $e) {
+
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
         }
         return new Response("ddbb updated - thing created with this id " . $thing->getId());

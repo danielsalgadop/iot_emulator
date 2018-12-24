@@ -16,7 +16,6 @@ class CreateThingHandler
         $this->thingRepository = $thingRepository;
     }
 
-//    public function handle():Thing
     public function handle(CreateThingCommand $command):Thing
     {
         $thing = new Thing();

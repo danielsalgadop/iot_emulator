@@ -30,7 +30,7 @@ services:
     # please note that last definitions always *replace* previous ones
     app.repository.thing:
         class: App\Infrastructure\MySQLThingRepository
-        public: true
+        public: false
         arguments:
             - "@doctrine.orm.default_entity_manager"
     app.command_handler.create_thing:
