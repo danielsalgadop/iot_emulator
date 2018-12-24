@@ -60,7 +60,7 @@ class ThingController extends Controller
 
         try{
             $time = time();
-            $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time]),['actionName1'.$time,'actionName2'.$time]);
+            $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time,"actions" => ['hardcodedAction1','hardcodedAction2']]));
             $thing = $createThingCommandHandler->handle($command);
         } catch (Exception $e) {
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
