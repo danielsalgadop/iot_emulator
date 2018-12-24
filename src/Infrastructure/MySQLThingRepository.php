@@ -19,7 +19,7 @@ class MySQLThingRepository implements ThingRepository
     public function save(Thing $thing)
     {
         try {
-            $this->em->merge($thing);
+            $this->em->persist($thing);
             $this->em->flush();
         } catch (Exception $e) {
             return $e->getMessage();

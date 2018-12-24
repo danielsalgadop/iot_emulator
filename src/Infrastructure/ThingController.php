@@ -65,8 +65,8 @@ class ThingController extends Controller
         } catch (Exception $e) {
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
         }
-//        return new Response("ddbb updated - thing created with this id " . $thing->getId());
-        return new Response("no hay magia aqui");
+        return new Response("ddbb updated - thing created with this id " . $thing->getId());
+//        return new Response("no hay magia aqui");
     }
 
 }
