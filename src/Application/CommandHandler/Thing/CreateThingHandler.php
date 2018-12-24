@@ -6,7 +6,7 @@ namespace App\Application\CommandHandler\Thing;
 use App\Application\Command\Thing\CreateThingCommand;
 use App\Domain\Entity\Action;
 use App\Domain\Entity\Thing;
-//use App\Domain\Repository\ThingRepository;
+use App\Domain\Repository\ThingRepository;
 //use Doctrine\ORM\EntityManager;
 
 class CreateThingHandler
