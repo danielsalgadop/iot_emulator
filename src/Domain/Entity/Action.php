@@ -29,7 +29,7 @@ class Action
 
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Property", mappedBy="idAction", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Entity\Property", mappedBy="idAction", cascade={"persist", "remove"})
      */
     private $property;
 

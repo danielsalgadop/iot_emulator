@@ -22,7 +22,7 @@ class Property
     private $value;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Action", inversedBy="property", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Domain\Entity\Action", inversedBy="property", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $idAction;
