@@ -27,6 +27,13 @@ class Action
      */
     private $IdThing;
 
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Property", mappedBy="idAction", cascade={"persist", "remove"})
+     */
+    private $property;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,4 +62,23 @@ class Action
 
         return $this;
     }
+
+    public function getProperty(): ?Property
+    {
+        return $this->property;
+    }
+
+    public function setProperty(Property $property): self
+    {
+        $this->property = $property;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $property->getIdAction()) {
+                $property->setIdAction($this);
+            }
+
+        return $this;
+    }
+
+
 }
