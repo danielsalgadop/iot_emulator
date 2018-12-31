@@ -6,7 +6,7 @@ index:
 search:
     path: /{id}
     controller: App\Infrastructure\ThingController::search
-    methods: POST
+    methods: GET
     requirements:
       id: '\d+'
 

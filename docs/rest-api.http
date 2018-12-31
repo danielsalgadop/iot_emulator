@@ -6,7 +6,7 @@ Cache-Control: no-cache
 
 ###
 
-POST http://localhost:8000/1
+GET http://localhost:8000/1
 Accept: */*
 Cache-Control: no-cache
 

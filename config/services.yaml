@@ -38,3 +38,8 @@ services:
         public: true
         arguments:
            - "@app.repository.thing"
+    app.command_handler.search_thing_by_id:
+        class: App\Application\CommandHandler\Thing\SearchThingByIdHandler
+        public: true
+        arguments:
+        - "@app.repository.thing"

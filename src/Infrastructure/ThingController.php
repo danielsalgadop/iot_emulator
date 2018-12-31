@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Application\Command\Thing\CreateThingCommand;
+use App\Application\Command\Thing\SearchThingByIdCommand;
 //use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
 use App\Infrastructure\MySQLThingRepository;
 //use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +41,17 @@ class ThingController extends Controller
     public function search(int $id): JsonResponse
     {
         // find Thing
+        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+
+        try{
+            $command = new SearchThingByIdCommand($id);
+            $thing = $searchThingByIdCommandHandler->handle($command);
+        } catch (\Exception $e) {
+
+            return new JsonResponse(['error' => 'An application error has occurred '.$e->getMessage()], 500);
+        }
+        return new JsonResponse("found!". $thing->getId(),201);
+//        return new JsonResponse(json_encode($thing));
         return new JsonResponse(["will search for this "=>$id]);
     }
 
