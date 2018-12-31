@@ -12,5 +12,8 @@ class BasicThing
         if(!isset($objData->brand)){
             throw new \Exception("No Brand found");
         }
+        if(!isset($objData->name)){
+            throw new \Exception("No Name found");
+        }
     }
 }
