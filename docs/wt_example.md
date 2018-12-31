@@ -36,6 +36,7 @@ Returns:
 {
    "id":"living-room-lamp",
    "name":"Living Room Lamp",
+   "brand":"panasonic",
    "description":"The lamp in the living room",
    "createdAd":"2012-08-24T17:29:11.683Z",
    "updatedAd":"2012-08-24T17:29:11.683Z",
