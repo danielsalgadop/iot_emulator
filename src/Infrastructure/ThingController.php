@@ -52,7 +52,7 @@ class ThingController extends Controller
     public function create(Request $request)
     {
 
-           $createThingCommandHandler = $this->get('app.command_handler.create_thing');
+        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 
         try{
             $command = new CreateThingCommand($request->getContent());
@@ -61,7 +61,7 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
         }
-        return new Response("ddbb updated - thing created with this id " . $thing->getId());
+        return new Response("ddbb updated - thing created with this id " . $thing->getId(),201);
     }
 
 }
