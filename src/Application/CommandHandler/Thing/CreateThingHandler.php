@@ -26,6 +26,7 @@ class CreateThingHandler
         $thing = new Thing($objData);
 
         $thing->setBrand($objData->brand);
+        $thing->setName($objData->name);
 
         foreach ($objData->actions as $actionName) {
             $action = new Action();
