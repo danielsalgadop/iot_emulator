@@ -52,9 +52,9 @@ class ThingController extends Controller
     public function create(Request $request)
     {
 
-        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 
         try{
+            $createThingCommandHandler = $this->get('app.command_handler.create_thing');
             $command = new CreateThingCommand($request->getContent());
             $thing = $createThingCommandHandler->handle($command);
         } catch (Exception $e) {

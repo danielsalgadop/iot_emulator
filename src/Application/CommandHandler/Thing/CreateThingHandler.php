@@ -28,7 +28,7 @@ class CreateThingHandler
         $thing->setBrand($objData->brand);
         $thing->setName($objData->name);
 
-        foreach ($objData->actions as $actionName) {
+        foreach ($objData->links->actions as $actionName) {
             $action = new Action();
             $property = new Property();
             $property->setValue($actionName);  // we asume properties born with action name

@@ -2,6 +2,8 @@
 {
     "name": "things name",
     "brand": "panasonic",
-    "actions": ["action1", "action1"]
+    "links": {
+        "actions": ["2action1", "2action1"]
+    }
 }
 ´´´
