@@ -1,4 +1,4 @@
 {
-	"brand":"jsonInFile",
+	"brand":"BrandInFileJson",
 	"actions":["jsonActioninFile1","jsonActgioninFile2"]
 }

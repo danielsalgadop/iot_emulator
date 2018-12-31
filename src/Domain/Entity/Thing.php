@@ -5,11 +5,11 @@ namespace App\Domain\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Domain\Entity\BasicThing;
 /**
  * @ORM\Entity(repositoryClass="App\Domain\Repository\ThingRepository")
  */
-class Thing
+class Thing extends BasicThing
 {
     /**
      * @ORM\Id()
@@ -28,8 +28,9 @@ class Thing
      */
     private $actions;
 
-    public function __construct()
+    public function __construct($objData)
     {
+        parent::__construct($objData);
         $this->actions = new ArrayCollection();
     }
 

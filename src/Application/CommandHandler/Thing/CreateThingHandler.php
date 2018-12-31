@@ -19,13 +19,15 @@ class CreateThingHandler
 
     public function handle(CreateThingCommand $command):Thing
     {
-        $thing = new Thing();
+
         $json = $command->getJson();
-        $objJson = json_decode($json);
+        $objData = json_decode($json);
 
-        $thing->setBrand($objJson->brand);
+        $thing = new Thing($objData);
 
-        foreach ($objJson->actions as $actionName) {
+        $thing->setBrand($objData->brand);
+
+        foreach ($objData->actions as $actionName) {
             $action = new Action();
             $property = new Property();
             $property->setValue($actionName);  // we asume properties born with action name
