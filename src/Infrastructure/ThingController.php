@@ -9,6 +9,7 @@ use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
 use App\Domain\Repository\ThingRepository;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,24 +49,19 @@ class ThingController extends Controller
         return new JsonResponse(["will delete this id"=>$id]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
 
-
-//        $thingRepository= $this->get('app.repository.thing');
-//         = new CreateThingHandler($thingRepository);
            $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 
         try{
-            $time = time();
-            $command = new CreateThingCommand(json_encode(['brand' => 'hcBrand'.$time,"actions" => ['hardcodedAction1','hardcodedAction2']]));
+            $command = new CreateThingCommand($request->getContent());
             $thing = $createThingCommandHandler->handle($command);
         } catch (Exception $e) {
 
             return new JsonResponse(['error' => 'An application error has occurred'], 500);
         }
         return new Response("ddbb updated - thing created with this id " . $thing->getId());
-//        return new Response("no hay magia aqui");
     }
 
 }

@@ -7,6 +7,8 @@ search:
     path: /{id}
     controller: App\Infrastructure\ThingController::search
     methods: POST
+    requirements:
+      id: '\d+'
 
 delete:
     path: /{id}

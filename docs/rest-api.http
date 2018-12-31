@@ -18,7 +18,12 @@ DELETE http://localhost:8000/1
 
 ###
 
-GET http://localhost:8000/create/
+GET http://localhost:8000/create
+Content-Type: application/json
 
+{
+"brand":"jsonBrand",
+"actions":["jsonAction1","jsonAction2"]
+}
 ###
 
