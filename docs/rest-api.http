@@ -26,8 +26,21 @@ Content-Type: application/json
 "brand":"jsonBrand",
 "links":
 {
+  "properties":[
+    {"jsonAction1":"jsonActionValue1"},
+    {"jsonAction2":"jsonActionValue2"}
+  ],
   "actions":["jsonAction1","jsonAction2"]
 }
+}
+
+###  Bad json
+
+POST http://localhost:8000/create
+Content-Type: application/json
+
+{
+  "bad json":
 }
 ###
 
@@ -44,6 +57,21 @@ Content-Type: application/json
 }
 
 ###
+
+# SIN BRAND
+POST http://localhost:8000/create
+Content-Type: application/json
+
+{
+  "name":"jsonName",
+  "links":
+  {
+    "actions":["jsonAction1","jsonAction2"]
+  }
+}
+
+###
+
 
 
 

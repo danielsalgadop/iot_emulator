@@ -41,11 +41,16 @@ class Thing
         foreach ($actionCollector as $action) {
             $this->addAction($action);
         }
+
     }
 
 
     public static function validJson($json):object {
+
         $objData = json_decode($json);
+        if ($objData === null && json_last_error() !== JSON_ERROR_NONE) {
+            throw new \Exception("Bad Json");
+        }
 
         if(!isset($objData->brand)){
             throw new \Exception("No Brand found");
