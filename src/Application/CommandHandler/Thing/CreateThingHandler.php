@@ -22,6 +22,8 @@ class CreateThingHandler
         $objData = Thing::validJson($command->getJson());
         $actionCollector = [];
 
+        Thing::actionsAndPropertiesConcordance($objData->links->actions, $objData->links->properties);
+
         foreach ($objData->links->actions as $actionName) {
             $action = new Action();
             $property = new Property();

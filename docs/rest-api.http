@@ -16,7 +16,7 @@ Cache-Control: no-cache
 
 DELETE http://localhost:8000/1
 
-###
+### (must Work)
 
 POST http://localhost:8000/create
 Content-Type: application/json
@@ -33,6 +33,62 @@ Content-Type: application/json
   "actions":["jsonAction1","jsonAction2"]
 }
 }
+
+###  Desordenado (must Work pero no funciona por ahora)
+
+POST http://localhost:8000/create
+Content-Type: application/json
+
+{
+  "name": "jsonName",
+  "brand":"jsonBrand",
+  "links":
+  {
+    "properties":[
+      {"jsonAction2":"jsonActionValue2"},
+      {"jsonAction1":"jsonActionValue1"}
+    ],
+    "actions":["jsonAction1","jsonAction2"]
+  }
+}
+
+
+### Falta 1 propiedad
+
+POST http://localhost:8000/create
+Content-Type: application/json
+
+{
+  "name": "jsonName",
+  "brand":"jsonBrand",
+  "links":
+  {
+    "properties":[
+      {"jsonAction2":"jsonActionValue2"}
+    ],
+    "actions":["jsonAction1","jsonAction2"]
+  }
+}
+
+### Sobra 1 propiedad
+
+POST http://localhost:8000/create
+Content-Type: application/json
+
+{
+  "name": "jsonName",
+  "brand":"jsonBrand",
+  "links":
+  {
+    "properties":[
+      {"jsonAction1":"jsonActionValue1"},
+      {"jsonAction2":"jsonActionValue2"},
+      {"jsonAction3Sobra":"jsonActionValue3Sobra"}
+    ],
+    "actions":["jsonAction1","jsonAction2"]
+  }
+}
+
 
 ###  Bad json
 
