@@ -31,3 +31,20 @@ Content-Type: application/json
 }
 ###
 
+# SIN NAME
+POST http://localhost:8000/create
+Content-Type: application/json
+
+{
+  "brand":"jsonBrand",
+  "links":
+  {
+    "actions":["jsonAction1","jsonAction2"]
+  }
+}
+
+###
+
+
+
+

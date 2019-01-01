@@ -19,14 +19,8 @@ class CreateThingHandler
 
     public function handle(CreateThingCommand $command):Thing
     {
-
-        $json = $command->getJson();
-        $objData = json_decode($json);
-
-        $thing = new Thing($objData);
-
-        $thing->setBrand($objData->brand);
-        $thing->setName($objData->name);
+        $objData = Thing::validJson($command->getJson());
+        $actionCollector = [];
 
         foreach ($objData->links->actions as $actionName) {
             $action = new Action();
@@ -34,8 +28,10 @@ class CreateThingHandler
             $property->setValue($actionName);  // we asume properties born with action name
             $action->setProperty($property);
             $action->setName($actionName);
-            $thing->addAction($action);
+            $actionCollector[] = $action;
         }
+
+        $thing = new Thing($objData->name,$objData->brand,$actionCollector);
         $this->thingRepository->save($thing);
         return $thing;
     }

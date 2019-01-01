@@ -9,7 +9,7 @@ use App\Domain\Entity\BasicThing;
 /**
  * @ORM\Entity(repositoryClass="App\Domain\Repository\ThingRepository")
  */
-class Thing extends BasicThing
+class Thing
 {
     /**
      * @ORM\Id()
@@ -29,47 +29,35 @@ class Thing extends BasicThing
     private $name;
 
     /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Domain\Entity\Action", mappedBy="IdThing", orphanRemoval=true, cascade={"persist"})
      */
     private $actions;
 
-    public function __construct($objData)
+    public function __construct($name,$brand,$actionCollector)
     {
-        parent::__construct($objData);
+        $this->name = $name;
+        $this->brand = $brand;
         $this->actions = new ArrayCollection();
+        foreach ($actionCollector as $action) {
+            $this->addAction($action);
+        }
     }
 
+
+    public static function validJson($json):object {
+        $objData = json_decode($json);
+
+        if(!isset($objData->brand)){
+            throw new \Exception("No Brand found");
+        }
+        if(!isset($objData->name)){
+            throw new \Exception("No Name found");
+        }
+        return $objData;
+    }
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getBrand(): ?string
-    {
-        return $this->brand;
-    }
-
-    public function setBrand(string $brand): self
-    {
-        $this->brand = $brand;
-
-        return $this;
     }
 
     /**
