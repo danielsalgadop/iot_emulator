@@ -18,12 +18,16 @@ DELETE http://localhost:8000/1
 
 ###
 
-GET http://localhost:8000/create
+POST http://localhost:8000/create
 Content-Type: application/json
 
 {
+  "name": "jsonName",
 "brand":"jsonBrand",
-"actions":["jsonAction1","jsonAction2"]
+"links":
+{
+  "actions":["jsonAction1","jsonAction2"]
+}
 }
 ###
 
