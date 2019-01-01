@@ -102,4 +102,12 @@ class Thing extends BasicThing
 
         return $this;
     }
+
+    public function searchOutput(){
+        $obj = new \stdClass();
+        $obj->id = $this->id;
+        $obj->name = $this->name;
+        $obj->brand = $this->brand;
+        return $obj;
+    }
 }

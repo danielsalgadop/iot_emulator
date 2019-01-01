@@ -50,7 +50,8 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => 'An application error has occurred '.$e->getMessage()], 500);
         }
-        return new JsonResponse("found!". $thing->getId(),201);
+        $array = $thing->searchOutput();
+        return new JsonResponse($array,201);
 //        return new JsonResponse(json_encode($thing));
         return new JsonResponse(["will search for this "=>$id]);
     }
