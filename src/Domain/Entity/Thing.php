@@ -44,10 +44,11 @@ class Thing
 
     }
 
-
+    // Works as validator and json_decoder (this is NOT single-responsability... bad boy)
     public static function validJson($json):object {
 
         $objData = json_decode($json);
+
         if ($objData === null && json_last_error() !== JSON_ERROR_NONE) {
             throw new \Exception("Bad Json");
         }
@@ -58,8 +59,16 @@ class Thing
         if(!isset($objData->name)){
             throw new \Exception("No Name found");
         }
+        if(!isset($objData->links->actions)){
+            throw new \Exception("No Actions found");
+        }
+        if(!isset($objData->links->properties)){
+            throw new \Exception("No Properties found");
+        }
+
         return $objData;
     }
+
     public function getId(): ?int
     {
         return $this->id;
