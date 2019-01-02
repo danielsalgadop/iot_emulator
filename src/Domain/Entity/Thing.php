@@ -44,14 +44,20 @@ class Thing
 
     }
 
-    // Works as validator and json_decoder (this is NOT single-responsability... bad boy)
-    public static function validJson($json):object {
+    public static function decodeJsonToObjectOrException($json)
+    {
+        $objJson = json_decode($json);
 
-        $objData = json_decode($json);
-
-        if ($objData === null && json_last_error() !== JSON_ERROR_NONE) {
+        if ($objJson === null && json_last_error() !== JSON_ERROR_NONE) {
             throw new \Exception("Bad Json");
         }
+
+        return $objJson;
+    }
+
+    public static function validJson($json):object {
+
+        $objData = Thing::decodeJsonToObjectOrException($json);
 
         if(!isset($objData->brand)){
             throw new \Exception("No Brand found");
