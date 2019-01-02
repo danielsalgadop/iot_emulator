@@ -64,4 +64,16 @@ class ThingController extends Controller
         return new Response("ddbb updated - thing created with this id " . $thing->getId(),201);
     }
 
+    public function updateProperty($id,$action_name,Request $request)
+    {
+                $objData = json_decode($request->getContent());
+
+                $new_value = $objData[0]->$action_name;
+//                file_put_contents("/tmp/debug.txt", var_export($objData,true).PHP_EOL,FILE_APPEND);
+//                file_put_contents("/tmp/debug.txt", var_export($request->getContent(),true).PHP_EOL,FILE_APPEND);
+                file_put_contents("/tmp/debug.txt", var_export($new_value,true).PHP_EOL,FILE_APPEND);
+
+
+        return new JsonResponse("ruta ok $id $action_name");
+    }
 }
