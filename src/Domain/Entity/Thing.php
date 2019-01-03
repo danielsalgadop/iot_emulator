@@ -115,7 +115,6 @@ class Thing
         if(count($actions) !== count($properties)){
                 Throw new \Exception($message);
         }
-//        file_put_contents("/tmp/debug.txt", var_export($properties,true).PHP_EOL,FILE_APPEND);
         for ($i = 0; $i < count($actions); $i++) {
             if(!isset($properties[$i]->{$actions[$i]})){
                 Throw new \Exception($message);

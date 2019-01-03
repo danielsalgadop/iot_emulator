@@ -20,7 +20,7 @@ class UpdatePropertyCommand
         return $this->action;
     }
 
-    public function getArrayOfProperties()
+    public function getJsonOfPropertiesAndValues()
     {
         return $this->arrayOfProperties;
     }

@@ -4,6 +4,7 @@
 namespace App\Infrastructure;
 
 //use http\Env\Response;
+use App\Application\Command\Thing\UpdatePropertyCommand;
 use App\Application\CommandHandler\Thing\CreateThingHandler;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
@@ -66,14 +67,25 @@ class ThingController extends Controller
 
     public function updateProperty($id,$action_name,Request $request)
     {
-                $objData = json_decode($request->getContent());
+        //file_put_contents("/tmp/debug.txt", var_export($request->getContent(), true) . PHP_EOL, FILE_APPEND);
 
-                $new_value = $objData[0]->$action_name;
+        $upatePropertyHandler = $this->get('app.command_handler.update_property');
+        try{
+            $command = new UpdatePropertyCommand($id, $action_name, $request->getContent());
+            $upatePropertyHandler->handle($command);
+        } catch (\Exception $e) {
+
+            return new JsonResponse(['error' => 'An application error has occurred '.$e->getMessage()], 500);
+        }
+        return new JsonResponse("toe toe toe");
+
+        /*
+        $objData = json_decode($request->getContent());
+        $new_value = $objData[0]->$action_name;
 //                file_put_contents("/tmp/debug.txt", var_export($objData,true).PHP_EOL,FILE_APPEND);
 //                file_put_contents("/tmp/debug.txt", var_export($request->getContent(),true).PHP_EOL,FILE_APPEND);
-                file_put_contents("/tmp/debug.txt", var_export($new_value,true).PHP_EOL,FILE_APPEND);
-
-
+        file_put_contents("/tmp/debug.txt", var_export($new_value,true).PHP_EOL,FILE_APPEND);
         return new JsonResponse("ruta ok $id $action_name");
+        */
     }
 }
