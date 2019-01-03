@@ -110,15 +110,24 @@ class Thing
 
         return $this;
     }
-    public static function actionsAndPropertiesConcordance($actions, $properties){
+    public static function actionsAndPropertiesConcordance($actions, $properties)
+    {
         $message = "No concordance for Actions and Properties";
-        if(count($actions) !== count($properties)){
-                Throw new \Exception($message);
+        if (count($actions) !== count($properties)) {
+            Throw new \Exception($message);
         }
         for ($i = 0; $i < count($actions); $i++) {
-            if(!isset($properties[$i]->{$actions[$i]})){
+            if (!isset($properties[$i]->{$actions[$i]})) {
                 Throw new \Exception($message);
             }
         }
+    }
+
+    public function searchOutput(){
+        $obj = new \stdClass();
+        $obj->id = $this->id;
+        $obj->name = $this->name;
+        $obj->brand = $this->brand;
+        return $obj;
     }
 }
