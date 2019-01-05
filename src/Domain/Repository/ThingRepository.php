@@ -5,5 +5,5 @@ use App\Domain\Entity\Thing;
 interface ThingRepository
 {
     public function save(Thing $thing);
-    public function searchThingById(int $id);
+    public function searchThingByIdOrException(int $id): ?\App\Domain\Entity\Thing;
 }

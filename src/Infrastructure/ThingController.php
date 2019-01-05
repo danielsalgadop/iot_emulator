@@ -49,7 +49,7 @@ class ThingController extends Controller
             $thing = $searchThingByIdCommandHandler->handle($command);
         } catch (\Exception $e) {
 
-            return new JsonResponse(['error' => 'An application error has occurred '.$e->getMessage()], 500);
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         $array = $thing->searchOutput();
         return new JsonResponse($array,201);
@@ -73,7 +73,7 @@ class ThingController extends Controller
             $thing = $createThingCommandHandler->handle($command);
         } catch (\Exception $e) {
 
-            return new JsonResponse(['error' => 'An application error has occurred '.$e->getMessage()], 500);
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         return new Response("ddbb updated - thing created with this id " . $thing->getId(),201);
     }
@@ -82,13 +82,18 @@ class ThingController extends Controller
     {
         //file_put_contents("/tmp/debug.txt", var_export($request->getContent(), true) . PHP_EOL, FILE_APPEND);
 
-        $upatePropertyHandler = $this->get('app.command_handler.update_property');
+        // find Thing
+        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+        $updatePropertyHandler = $this->get('app.command_handler.update_property');
+
         try{
-            $command = new UpdatePropertyCommand($id, $action_name, $request->getContent());
-            $upatePropertyHandler->handle($command);
+            $command = new SearchThingByIdCommand($id);
+            $thing = $searchThingByIdCommandHandler->handle($command);
+            $command = new UpdatePropertyCommand($thing, $action_name, $request->getContent());
+            $updatePropertyHandler->handle($command);
         } catch (\Exception $e) {
 
-            return new JsonResponse(['error' => 'An application error has occurred '.$e->getMessage()], 500);
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         return new JsonResponse("toe toe toe");
 

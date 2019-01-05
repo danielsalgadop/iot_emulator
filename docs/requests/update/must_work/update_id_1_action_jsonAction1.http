@@ -1,0 +1,10 @@
+# PUT {wt}/properties/temperature/
+
+PUT localhost:8000/1/properties/jsonAction2
+Content-Type: application/json
+
+{
+  "jsonAction2": "jsonActionUpdated"
+}
+
+###

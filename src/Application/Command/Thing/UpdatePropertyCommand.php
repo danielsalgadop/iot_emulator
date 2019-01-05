@@ -2,34 +2,39 @@
 
 namespace App\Application\Command\Thing;
 
+use App\Domain\Entity\Thing;
 
 class UpdatePropertyCommand
 {
     // DUDA, se podria sacar todo del request, y no enviar ni $id, ni $action
-    private $id;
+    private $thing;
     private $action;
-    private $arrayOfProperties;
+    private $jsonOfPropertiesAndValues;
 
-    public function getId()
+    /**
+     * @return Thing
+     */
+    public function getThing(): Thing
     {
-        return $this->id;
+        return $this->thing;
     }
+
+    public function getJsonOfPropertiesAndValues(): string
+    {
+        return $this->jsonOfPropertiesAndValues;
+    }
+
 
     public function getAction()
     {
         return $this->action;
     }
 
-    public function getJsonOfPropertiesAndValues()
+    public function __construct(Thing $thing, string $action, string $jsonOfPropertiesAndValues)
     {
-        return $this->arrayOfProperties;
-    }
-
-    public function __construct($id,$action,$arrayOfProperties)
-    {
-        $this->id = $id;
+        $this->thing = $thing;
         $this->action = $action;
-        $this->arrayOfProperties = $arrayOfProperties;
+        $this->jsonOfPropertiesAndValues = $jsonOfPropertiesAndValues;
     }
 
 }

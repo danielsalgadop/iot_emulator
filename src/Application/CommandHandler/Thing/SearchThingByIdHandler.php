@@ -15,11 +15,11 @@ class SearchThingByIdHandler
         $this->thingRepository = $thingRepository;
     }
 
-    public function handle(SearchThingByIdCommand $command):Thing
+    public function handle(SearchThingByIdCommand $command): Thing
     {
 
         $id = $command->getId();
-        $thing = $this->thingRepository->searchThingById($id);
+        $thing = $this->thingRepository->searchThingByIdOrException($id);
         return $thing;
     }
 }

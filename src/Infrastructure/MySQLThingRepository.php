@@ -25,13 +25,17 @@ class MySQLThingRepository implements ThingRepository
             return $e->getMessage();
         }
     }
-    public function searchThingById(int $id)
+    public function searchThingByIdOrException(int $id): ?Thing
     {
 //        $things = $this->em
 //            ->getRepository(Thing::class)
 //            ->findBy(['id' => $id]);
 
-        return $this->em->find(Thing::class, 1);
+        $thing = $this->em->find(Thing::class, $id);
+        if($thing === null){
+            throw new \Exception("Non-existing THING id");
+        }
+        return $thing;
 //        return $things->getId();
 
 //        if (count($things) === 0) {
