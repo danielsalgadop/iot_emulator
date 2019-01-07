@@ -20,7 +20,9 @@ create:
     controller: App\Infrastructure\ThingController::create
     methods: POST
 
+# post an actions
 update_property:
+  # {id}/actions/{action_name}
     path: /{id}/properties/{action_name}
     controller: App\Infrastructure\ThingController::updateProperty
     methods: PUT
