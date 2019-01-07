@@ -124,6 +124,7 @@ class Thing
     }
 
     public function searchOutput(){
+        // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
         $obj = new \stdClass();
         $obj->id = $this->id;
         $obj->name = $this->name;

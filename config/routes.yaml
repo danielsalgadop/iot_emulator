@@ -26,3 +26,13 @@ update_property:
     methods: PUT
     requirements:
         id: '\d+'
+
+# hay que hacer un GET properties/property_name
+
+
+getActions:
+    path: /{id}/actions
+    controller: App\Infrastructure\ThingController::getActionsByThingId
+    methods: GET
+    requirements:
+      id: '\d+'

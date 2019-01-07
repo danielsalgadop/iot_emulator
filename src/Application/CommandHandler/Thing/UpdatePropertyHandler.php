@@ -45,7 +45,7 @@ class UpdatePropertyHandler
 
         $arrayOfPropertiesAndValues = Thing::decodeJsonToObjectOrException($command->getJsonOfPropertiesAndValues());
         // Again, we assume that 1 action has only 1 property. This foreach could be
-        file_put_contents("/tmp/debug.txt", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export($arrayOfPropertiesAndValues, true) . PHP_EOL, FILE_APPEND);
+//        file_put_contents("/tmp/debug.txt", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export($arrayOfPropertiesAndValues, true) . PHP_EOL, FILE_APPEND);
         foreach ($arrayOfPropertiesAndValues as $propertyName => $propertyValue){
             $action = new Action();
             $property = new Property();

@@ -4,6 +4,7 @@
 namespace App\Infrastructure;
 
 //use http\Env\Response;
+use App\Application\Command\Thing\GetActionsByThingIdCommand;
 use App\Application\Command\Thing\UpdatePropertyCommand;
 use App\Application\CommandHandler\Thing\CreateThingHandler;
 use App\Domain\Entity\Thing;
@@ -95,7 +96,7 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-        return new JsonResponse("toe toe toe");
+        return new JsonResponse("updated property for id ".$thing->getId(), 204);
 
         /*
         $objData = json_decode($request->getContent());
@@ -105,5 +106,30 @@ class ThingController extends Controller
         file_put_contents("/tmp/debug.txt", var_export($new_value,true).PHP_EOL,FILE_APPEND);
         return new JsonResponse("ruta ok $id $action_name");
         */
+    }
+    public function getActionsByThingId($id)
+    {
+
+        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+
+        try {
+            $command = new SearchThingByIdCommand($id);
+            $thing = $searchThingByIdCommandHandler->handle($command);
+
+
+            $array_actions = [];
+            foreach ($thing->getActions() as $action) {
+                // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
+
+                $objAction = new \stdClass();
+                $objAction->id= $action->getId();
+                $objAction->name= $action->getName();
+                $array_actions[] = $objAction;
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+
+        return new JsonResponse(json_encode($array_actions));
     }
 }
