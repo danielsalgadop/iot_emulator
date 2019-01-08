@@ -10,7 +10,7 @@ search:
     requirements:
       id: '\d+'
 
-delete:
+delete_thing:
     path: /{id}
     controller: App\Infrastructure\ThingController::delete
     methods: DELETE
@@ -31,7 +31,7 @@ execute_action:
 # hay que hacer un GET properties/property_name
 
 
-getActions:
+get_actions:
     path: /{id}/actions
     controller: App\Infrastructure\ThingController::getActionsByThingId
     methods: GET

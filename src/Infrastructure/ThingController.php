@@ -60,8 +60,18 @@ class ThingController extends Controller
 
     public function delete(int $id): JsonResponse
     {
-        // delete Thing
-        return new JsonResponse(["will delete this id"=>$id]);
+        $thingRepository = $this->get('app.repository.thing');
+        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+        try{
+            $command = new SearchThingByIdCommand($id);
+            $thing = $searchThingByIdCommandHandler->handle($command);
+        } catch (\Exception $e) {
+
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+        $thingRepository->remove($thing);
+
+        return new JsonResponse('',204);
     }
 
     public function create(Request $request)

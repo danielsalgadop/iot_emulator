@@ -25,6 +25,15 @@ class MySQLThingRepository implements ThingRepository
             return $e->getMessage();
         }
     }
+    public function remove(Thing $thing)
+    {
+        try {
+            $this->em->remove($thing);
+            $this->em->flush();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
     public function searchThingByIdOrException(int $id): ?Thing
     {
 //        $things = $this->em
