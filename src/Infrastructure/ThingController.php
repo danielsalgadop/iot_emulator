@@ -5,7 +5,7 @@ namespace App\Infrastructure;
 
 //use http\Env\Response;
 use App\Application\Command\Thing\GetActionsByThingIdCommand;
-use App\Application\Command\Thing\UpdatePropertyCommand;
+use App\Application\Command\Thing\ExecuteActionCommand;
 use App\Application\CommandHandler\Thing\CreateThingHandler;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
@@ -79,19 +79,19 @@ class ThingController extends Controller
         return new Response("ddbb updated - thing created with this id " . $thing->getId(),201);
     }
 
-    public function updateProperty($id,$action_name,Request $request)
+    public function executeAction($id,$action_name,Request $request)
     {
         //file_put_contents("/tmp/debug.txt", var_export($request->getContent(), true) . PHP_EOL, FILE_APPEND);
 
         // find Thing
         $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
-        $updatePropertyHandler = $this->get('app.command_handler.update_property');
+        $executeActionHandler = $this->get('app.command_handler.execute_action');
 
         try{
             $command = new SearchThingByIdCommand($id);
             $thing = $searchThingByIdCommandHandler->handle($command);
-            $command = new UpdatePropertyCommand($thing, $action_name, $request->getContent());
-            $updatePropertyHandler->handle($command);
+            $command = new ExecuteActionCommand($thing, $action_name, $request->getContent());
+            $executeActionHandler->handle($command);
         } catch (\Exception $e) {
 
             return new JsonResponse(['error' => $e->getMessage()], 500);

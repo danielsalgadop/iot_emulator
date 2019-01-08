@@ -21,10 +21,9 @@ create:
     methods: POST
 
 # post an actions
-update_property:
-  # {id}/actions/{action_name}
-    path: /{id}/properties/{action_name}
-    controller: App\Infrastructure\ThingController::updateProperty
+execute_action:
+    path: /{id}/actions/{action_name}
+    controller: App\Infrastructure\ThingController::executeAction
     methods: PUT
     requirements:
         id: '\d+'

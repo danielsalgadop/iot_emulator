@@ -1,17 +1,17 @@
-# PUT {wt}/properties/temperature/
+#POST {wt}/actions/reboot
 
-PUT localhost:8000/1/properties/jsonAction1
+PUT localhost:8000/1/actions/jsonAction2
 Content-Type: application/json
 
 [
-{
-"jsonAction1":"nuevoValor"
-}
+  {
+    "jsonAction2":"nuevoValor5"
+  }
 ]
 ###
 
 # MUST fail invalid action in url
-PUT localhost:8000/1/properties/BADjsonAction1
+PUT localhost:8000/1/actions/BADjsonAction1
 Content-Type: application/json
 
 [
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 
 # MUST fail invalid action in payload
-PUT localhost:8000/1/properties/jsonAction1
+PUT localhost:8000/1/actions/jsonAction1
 Content-Type: application/json
 
 [

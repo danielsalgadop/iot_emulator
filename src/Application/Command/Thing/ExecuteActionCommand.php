@@ -4,7 +4,7 @@ namespace App\Application\Command\Thing;
 
 use App\Domain\Entity\Thing;
 
-class UpdatePropertyCommand
+class ExecuteActionCommand
 {
     // DUDA, se podria sacar todo del request, y no enviar ni $id, ni $action
     private $thing;

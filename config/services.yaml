@@ -38,8 +38,8 @@ services:
         public: true
         arguments:
            - "@app.repository.thing"
-    app.command_handler.update_property:
-        class: App\Application\CommandHandler\Thing\UpdatePropertyHandler
+    app.command_handler.execute_action:
+        class: App\Application\CommandHandler\Thing\ExecuteActionHandler
         public: true
         arguments:
         - "@app.repository.thing"
