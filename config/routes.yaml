@@ -24,7 +24,7 @@ create:
 execute_action:
     path: /{id}/actions/{action_name}
     controller: App\Infrastructure\ThingController::executeAction
-    methods: PUT
+    methods: POST
     requirements:
         id: '\d+'
 

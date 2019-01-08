@@ -1,34 +1,34 @@
 #POST {wt}/actions/reboot
 
-PUT localhost:8000/1/actions/jsonAction2
+POST localhost:8000/1/actions/jsonAction2
 Content-Type: application/json
 
-[
-  {
-    "jsonAction2":"nuevoValor5"
-  }
-]
+
+{
+  "jsonAction2":"nuevoValor6"
+}
+
 ###
 
 # MUST fail invalid action in url
-PUT localhost:8000/1/actions/BADjsonAction1
+POST localhost:8000/1/actions/BADjsonAction1
 Content-Type: application/json
 
-[
-  {
-    "jsonAction1":"nuevoValor"
-  }
-]
+
+{
+  "jsonAction1":"nuevoValor"
+}
+
 ###
 
 
 # MUST fail invalid action in payload
-PUT localhost:8000/1/actions/jsonAction1
+POST localhost:8000/1/actions/jsonAction1
 Content-Type: application/json
 
-[
-  {
-    "BADjsonAction1":"nuevoValor"
-  }
-]
+
+{
+  "BADjsonAction1":"nuevoValor"
+}
+
 ###

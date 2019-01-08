@@ -30,11 +30,12 @@ class ExecuteActionHandler
 
                 $property = $action->getProperty();
                 // We are assuming 1 action has 1 property
-                $property->setValue($arrayOfPropertiesAndValues[0]->$action_name);
+                $property->setValue($arrayOfPropertiesAndValues->$action_name);
                 $this->thingRepository->save($thing);
                 return true;
             }
         }
+        
         throw new \Exception("Non-existing Action for update");
     }
 }
