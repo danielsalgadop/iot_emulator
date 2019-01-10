@@ -142,4 +142,35 @@ class ThingController extends Controller
 
         return new JsonResponse(json_encode($array_actions));
     }
+
+    public function getValueOfProperty($id,$property_name)
+    {
+        # we assume property name === action name (in fact, there is NO property_name)
+
+        try{
+
+            $thing = $this->getThingByThingIdOrException($id);
+            $actions = $thing->getActions();
+            foreach ($actions as $action) {
+                if($action->getName() === $property_name){
+                    $property = $action->getProperty();
+                    return new JsonResponse($property->asArray());
+                }
+        }
+        } catch (\Exception $e){
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+
+        }
+        return new JsonResponse(['error' => "unknown Property"], 500);
+    }
+
+    // TODO use it in this file where 'app.command_handler.search_thing_by_id' is being used
+    // DUDA, esto es "sospechosamente" MUY parecido a thingRepository->searchThingByIdOrException($id)
+    private function getThingByThingIdOrException($id){
+
+        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+        $command = new SearchThingByIdCommand($id);
+        return $searchThingByIdCommandHandler->handle($command);
+    }
+
 }

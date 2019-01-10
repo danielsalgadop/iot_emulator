@@ -28,8 +28,10 @@ execute_action:
     requirements:
         id: '\d+'
 
-# hay que hacer un GET properties/property_name
-
+get_value_of_property:
+    path: /{id}/properties/{property_name}
+    controller: App\Infrastructure\ThingController::getValueOfProperty
+    methods: GET
 
 get_actions:
     path: /{id}/actions

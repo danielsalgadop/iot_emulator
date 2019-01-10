@@ -1,0 +1,12 @@
+# 6.4.4.2 Retrieve the value of a property
+# GET {wt}/properties/{acceleration}
+
+# we assume property name === action name (in fact, there is NO property_name)
+GET localhost:8000/9/properties/jsonAction1
+
+###
+
+
+GET localhost:8000/9/properties/jsonAction2
+
+###
