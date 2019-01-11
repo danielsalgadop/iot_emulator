@@ -33,6 +33,12 @@ class Thing
      */
     private $actions;
 
+
+    /**
+    * @ORM\OneToOne(targetEntity="App\Domain\Entity\User", mappedBy="thing", cascade={"persist", "remove"})
+    */
+    private $user;
+
     public function __construct($name,$brand,$actionCollector)
     {
         $this->name = $name;
@@ -110,6 +116,27 @@ class Thing
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setProperty(User $user): self
+    {
+        $this->user = $user;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $user->getIdThing()) {
+            $user->setIdThing($this);
+        }
+
+        return $this;
+    }
+
+
+
+
     public static function actionsAndPropertiesConcordance($actions, $properties)
     {
         $message = "No concordance for Actions and Properties";
