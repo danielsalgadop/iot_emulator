@@ -7,6 +7,7 @@ use App\Application\Command\Thing\CreateThingCommand;
 use App\Domain\Entity\Action;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Property;
+use App\Domain\Entity\User;
 use App\Domain\Repository\ThingRepository;
 
 class CreateThingHandler
@@ -19,15 +20,18 @@ class CreateThingHandler
 
     public function handle(CreateThingCommand $command):Thing
     {
-        $objData = Thing::validJson($command->getJson());
-        $actionCollector = [];
+        // TODO validJson, no solo valida, sino que devuelve el $obj con los datos
+        $objData = Thing::validJson($command->getJson(), $command->getUser(), $command->getPassword());
 
+        // TODO meter esta actionsAndPropertiesConcordance en validJson
         Thing::actionsAndPropertiesConcordance($objData->links->actions, $objData->links->properties);
 
 
+        $actionCollector = [];
         for ($i = 0; $i < count($objData->links->actions); $i++) {
                 $action = new Action();
                 $property = new Property();
+
                 $property->setValue($objData->links->properties[$i]->{$objData->links->actions[$i]});  // madre mia, muy enrevesado!
                 $action->setProperty($property);
                 $action->setName($objData->links->actions[$i]);
@@ -44,7 +48,11 @@ class CreateThingHandler
         }
             */
 
-        $thing = new Thing($objData->name,$objData->brand,$actionCollector);
+        $user = new User();
+        $user->setName($command->getUser());
+        $user->setPassword($command->getPassword());
+
+        $thing = new Thing($objData->name,$objData->brand,$actionCollector,$user);
         $this->thingRepository->save($thing);
         return $thing;
     }

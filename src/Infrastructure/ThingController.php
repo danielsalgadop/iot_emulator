@@ -80,7 +80,7 @@ class ThingController extends Controller
         $createThingCommandHandler = $this->get('app.command_handler.create_thing');
 
         try{
-            $command = new CreateThingCommand($request->getContent());
+            $command = new CreateThingCommand($request->getContent(),$request->headers->get('user'),$request->headers->get('password'));
             $thing = $createThingCommandHandler->handle($command);
         } catch (\Exception $e) {
 

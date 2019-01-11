@@ -39,11 +39,12 @@ class Thing
     */
     private $user;
 
-    public function __construct($name,$brand,$actionCollector)
+    public function __construct($name,$brand,$actionCollector, User $user)
     {
         $this->name = $name;
         $this->brand = $brand;
         $this->actions = new ArrayCollection();
+        $this->user = $user;
         foreach ($actionCollector as $action) {
             $this->addAction($action);
         }
@@ -61,7 +62,7 @@ class Thing
         return $objJson;
     }
 
-    public static function validJson($json):object {
+    public static function validJson($json,$user,$password):object {
 
         $objData = Thing::decodeJsonToObjectOrException($json);
 
@@ -76,6 +77,12 @@ class Thing
         }
         if(!isset($objData->links->properties)){
             throw new \Exception("No Properties found");
+        }
+        if(!isset($user)){
+            throw new \Exception("No User found");
+        }
+        if(!isset($password)){
+            throw new \Exception("No Password found");
         }
 
         return $objData;
@@ -122,7 +129,7 @@ class Thing
         return $this->user;
     }
 
-    public function setProperty(User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 

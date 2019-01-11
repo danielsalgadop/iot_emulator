@@ -1,0 +1,19 @@
+POST http://localhost:8000/create
+Content-Type: application/json
+user: user2
+password: password
+
+{
+  "name": "jsonName",
+  "brand":"jsonBrand",
+  "links":
+  {
+    "properties":[
+      {"jsonAction1":"jsonActionValue1"},
+      {"jsonAction2":"jsonActionValue2"}
+    ],
+    "actions":["jsonAction1","jsonAction2"]
+  }
+}
+
+###
