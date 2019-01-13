@@ -45,6 +45,7 @@ class Thing
         $this->brand = $brand;
         $this->actions = new ArrayCollection();
         $this->user = $user;
+        // $this->setUser($user);
         foreach ($actionCollector as $action) {
             $this->addAction($action);
         }
