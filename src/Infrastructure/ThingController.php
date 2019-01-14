@@ -59,12 +59,13 @@ class ThingController extends Controller
         return new JsonResponse(["will search for this "=>$id]);
     }
 
-    public function delete(int $id): JsonResponse
+    public function delete(int $id, Request $request): JsonResponse
     {
-        $thingRepository = $this->get('app.repository.thing');
-        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
         try{
-            $command = new SearchThingByIdCommand($id);
+            $this->requestHasUserAndPasswordOrException($request);
+            $thingRepository = $this->get('app.repository.thing');
+            $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+            $command = new SearchThingByIdCommand($id, $request->headers->get('user'),$request->headers->get('password'));
             $thing = $searchThingByIdCommandHandler->handle($command);
         } catch (\Exception $e) {
 
@@ -78,9 +79,9 @@ class ThingController extends Controller
     public function create(Request $request)
     {
 
-        $createThingCommandHandler = $this->get('app.command_handler.create_thing');
-
         try{
+            $this->requestHasUserAndPasswordOrException($request);
+            $createThingCommandHandler = $this->get('app.command_handler.create_thing');
             $command = new CreateThingCommand($request->getContent(),$request->headers->get('user'),$request->headers->get('password'));
             $thing = $createThingCommandHandler->handle($command);
         } catch (\Exception $e) {
