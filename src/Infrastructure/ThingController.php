@@ -11,6 +11,7 @@ use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
 use App\Domain\Repository\ThingRepository;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -117,13 +118,15 @@ class ThingController extends Controller
         return new JsonResponse("ruta ok $id $action_name");
         */
     }
-    public function getActionsByThingId($id)
+    public function getActionsByThingId($id, Request $request)
     {
 
-        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
 
         try {
-            $command = new SearchThingByIdCommand($id);
+            $this->requestHasUserAndPasswordOrException($request);
+            $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+
+            $command = new SearchThingByIdCommand($id,$request->headers->get('user'),$request->headers->get('password'));
             $thing = $searchThingByIdCommandHandler->handle($command);
 
 
@@ -173,4 +176,13 @@ class ThingController extends Controller
         return $searchThingByIdCommandHandler->handle($command);
     }
 
+    public function requestHasUserAndPasswordOrException(Request $request)
+    {
+        file_put_contents("/tmp/debug.txt", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export($request, true) . PHP_EOL, FILE_APPEND);
+        $user = $request->headers->get('user');
+        $password = $request->headers->get('password');
+        if(!isset($user) || !isset($password)){
+            throw new Exception("Invalid Request: cant find mandatory http-headers, user and password");
+        }
+    }
 }

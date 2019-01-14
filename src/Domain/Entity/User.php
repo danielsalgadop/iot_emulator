@@ -3,6 +3,7 @@
 namespace App\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\User\Repository")
@@ -73,5 +74,12 @@ class User
         $this->thing = $thing;
 
         return $this;
+    }
+    public function correctCredentialsOrException(string $name = "", string $password = ""):bool
+    {
+        if($this->name === $name&& $this->password === $password){
+            return true;
+        }
+        throw new Exception("Invalid Credentials");
     }
 }

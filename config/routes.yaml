@@ -3,17 +3,20 @@ index:
     controller: App\Infrastructure\ThingController::index
     methods: GET
 
+# no need for credentials
 search:
     path: /{id}
-    controller: App\Infrastructure\ThingController::search
+    controller:     App\Infrastructure\ThingController::search
     methods: GET
     requirements:
       id: '\d+'
+
 
 delete_thing:
     path: /{id}
     controller: App\Infrastructure\ThingController::delete
     methods: DELETE
+
 
 create:
     path: /create
@@ -33,6 +36,7 @@ get_value_of_property:
     controller: App\Infrastructure\ThingController::getValueOfProperty
     methods: GET
 
+# credentials needed
 get_actions:
     path: /{id}/actions
     controller: App\Infrastructure\ThingController::getActionsByThingId

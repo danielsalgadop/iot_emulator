@@ -53,6 +53,7 @@ class CreateThingHandler
         $user->setPassword($command->getPassword());
 
         // DUDA. esto ¿tiene q ser en este orden? crear User -> Crear Thing -> crear relacion user->setThing
+        // entiendo que dentro de Thing__construct valdria con hacer un $this->setUser, ¿no?
         $thing = new Thing($objData->name,$objData->brand,$actionCollector,$user);
         $user->setThing($thing);
         $this->thingRepository->save($thing);

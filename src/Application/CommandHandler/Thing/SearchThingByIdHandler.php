@@ -20,6 +20,8 @@ class SearchThingByIdHandler
 
         $id = $command->getId();
         $thing = $this->thingRepository->searchThingByIdOrException($id);
+        $user = $thing->getUser();
+        $user->correctCredentialsOrException($command->getUser(),$command->getPassword());
         return $thing;
     }
 }
