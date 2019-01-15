@@ -21,14 +21,6 @@ class CreateThingHandler
 
     public function handle(CreateThingCommand $command):Thing
     {
-        // TODO validJson, no solo valida, sino que devuelve el $obj con los datos
-        $objData = Thing::validJson($command->getJson(), $command->getUser(), $command->getPassword());
-
-        // TODO meter esta hasActionsAndPropertiesConcordance en validJson
-        if(!Thing::hasActionsAndPropertiesConcordance($objData->links->actions, $objData->links->properties)){
-            throw new Exception("No concordance for Actions and Properties");
-        };
-
 
         $actionCollector = [];
         for ($i = 0; $i < count($objData->links->actions); $i++) {

@@ -81,9 +81,20 @@ class ThingController extends Controller
 
     public function create(Request $request)
     {
-
         try{
+            $array = $this->decodeJsonToArrayOrException($request->getContent());
+            if(!Thing::isIntegrityValidOnCreate($array)){
+                throw new Exception('missing data for Thing creation');
+            }
             $this->requestHasUserAndPasswordOrException($request);
+
+            if(!Thing::hasActionsAndPropertiesConcordance($array['links']['actions'], $array['links']['properties'])){
+                throw new Exception("No concordance for Actions and Properties");
+            };
+        die;
+
+
+
             $createThingCommandHandler = $this->get('app.command_handler.create_thing');
             $command = new CreateThingCommand($request->getContent(),$request->headers->get('user'),$request->headers->get('password'));
             $thing = $createThingCommandHandler->handle($command);
@@ -180,7 +191,7 @@ class ThingController extends Controller
         return $searchThingByIdCommandHandler->handle($command);
     }
 
-    public function requestHasUserAndPasswordOrException(Request $request)
+    private function requestHasUserAndPasswordOrException(Request $request)
     {
         file_put_contents("/tmp/debug.txt", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export($request, true) . PHP_EOL, FILE_APPEND);
         $user = $request->headers->get('user');
@@ -188,5 +199,17 @@ class ThingController extends Controller
         if(!isset($user) || !isset($password)){
             throw new Exception("Invalid Request: cant find mandatory http-headers, user and password");
         }
+    }
+
+
+    private function decodeJsonToArrayOrException($json)
+    {
+        $array = json_decode($json,true);
+
+        if ($array === null && json_last_error() !== JSON_ERROR_NONE) {
+            throw new \Exception("Bad Json");
+        }
+
+        return $array;
     }
 }

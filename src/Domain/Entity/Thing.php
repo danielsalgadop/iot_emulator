@@ -52,41 +52,18 @@ class Thing
 
     }
 
-    public static function decodeJsonToObjectOrException($json)
-    {
-        $objJson = json_decode($json);
 
-        if ($objJson === null && json_last_error() !== JSON_ERROR_NONE) {
-            throw new \Exception("Bad Json");
+    public static function isIntegrityValidOnCreate(array $data): bool{
+        if(
+            isset($data['brand']) &&
+            isset($data['name']) &&
+            isset($data['links']['actions']) &&
+            isset($data['links']['properties'])
+        )
+        {
+            return true;
         }
-
-        return $objJson;
-    }
-    // rename isIntegrityValidOnCreate(array $array)
-    public static function validJson($json):object {
-
-        $objData = Thing::decodeJsonToObjectOrException($json);
-
-        if(!isset($objData->brand)){
-            throw new \Exception("No Brand found");
-        }
-        if(!isset($objData->name)){
-            throw new \Exception("No Name found");
-        }
-        if(!isset($objData->links->actions)){
-            throw new \Exception("No Actions found");
-        }
-        if(!isset($objData->links->properties)){
-            throw new \Exception("No Properties found");
-        }
-//        if(!isset($user)){
-//            throw new \Exception("No User found");
-//        }
-//        if(!isset($password)){
-//            throw new \Exception("No Password found");
-//        }
-
-        return $objData;
+        return false;
     }
 
     public function getId(): ?int
@@ -145,13 +122,14 @@ class Thing
 
 
 
-    public static function hasActionsAndPropertiesConcordance($actions, $properties): bool
+    public static function hasActionsAndPropertiesConcordance(array $actions, array $properties): bool
     {
+
         if (count($actions) !== count($properties)) {
             return false;
         }
         for ($i = 0; $i < count($actions); $i++) {
-            if (!isset($properties[$i]->{$actions[$i]})) {
+            if (!isset($properties[$i][$actions[$i]] )) {
                 return false;
             }
         }
