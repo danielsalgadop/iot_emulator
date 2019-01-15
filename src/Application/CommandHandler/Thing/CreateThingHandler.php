@@ -9,6 +9,7 @@ use App\Domain\Entity\Thing;
 use App\Domain\Entity\Property;
 use App\Domain\Entity\User;
 use App\Domain\Repository\ThingRepository;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class CreateThingHandler
 {
@@ -23,8 +24,10 @@ class CreateThingHandler
         // TODO validJson, no solo valida, sino que devuelve el $obj con los datos
         $objData = Thing::validJson($command->getJson(), $command->getUser(), $command->getPassword());
 
-        // TODO meter esta actionsAndPropertiesConcordance en validJson
-        Thing::actionsAndPropertiesConcordance($objData->links->actions, $objData->links->properties);
+        // TODO meter esta hasActionsAndPropertiesConcordance en validJson
+        if(!Thing::hasActionsAndPropertiesConcordance($objData->links->actions, $objData->links->properties)){
+            throw new Exception("No concordance for Actions and Properties");
+        };
 
 
         $actionCollector = [];

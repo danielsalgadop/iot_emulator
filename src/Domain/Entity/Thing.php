@@ -62,8 +62,8 @@ class Thing
 
         return $objJson;
     }
-
-    public static function validJson($json,$user,$password):object {
+    // rename isIntegrityValidOnCreate(array $array)
+    public static function validJson($json):object {
 
         $objData = Thing::decodeJsonToObjectOrException($json);
 
@@ -79,12 +79,12 @@ class Thing
         if(!isset($objData->links->properties)){
             throw new \Exception("No Properties found");
         }
-        if(!isset($user)){
-            throw new \Exception("No User found");
-        }
-        if(!isset($password)){
-            throw new \Exception("No Password found");
-        }
+//        if(!isset($user)){
+//            throw new \Exception("No User found");
+//        }
+//        if(!isset($password)){
+//            throw new \Exception("No Password found");
+//        }
 
         return $objData;
     }
@@ -145,17 +145,17 @@ class Thing
 
 
 
-    public static function actionsAndPropertiesConcordance($actions, $properties)
+    public static function hasActionsAndPropertiesConcordance($actions, $properties): bool
     {
-        $message = "No concordance for Actions and Properties";
         if (count($actions) !== count($properties)) {
-            Throw new \Exception($message);
+            return false;
         }
         for ($i = 0; $i < count($actions); $i++) {
             if (!isset($properties[$i]->{$actions[$i]})) {
-                Throw new \Exception($message);
+                return false;
             }
         }
+        return true;
     }
 
     public function searchOutput(){

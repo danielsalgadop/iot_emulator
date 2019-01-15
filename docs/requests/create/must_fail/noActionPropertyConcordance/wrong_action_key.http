@@ -1,7 +1,7 @@
 POST http://localhost:8000/create
 Content-Type: application/json
-user: user18
-password: password18
+user: user
+password: password
 
 {
   "name": "jsonName",
@@ -12,7 +12,7 @@ password: password18
       {"jsonAction1":"jsonActionValue1"},
       {"jsonAction2":"jsonActionValue2"}
     ],
-    "actions":["jsonAction1","jsonAction2"]
+    "actions":["jsonAction1WRONG","jsonAction2"]
   }
 }
 

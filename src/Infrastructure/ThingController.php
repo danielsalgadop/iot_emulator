@@ -63,8 +63,11 @@ class ThingController extends Controller
     {
         try{
             $this->requestHasUserAndPasswordOrException($request);
+
+            // TODO use getThingByThingIdOrException
             $thingRepository = $this->get('app.repository.thing');
             $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+            $command = new SearchThingByIdCommand($id, $request->headers->get('user'),$request->headers->get('password'));
             $command = new SearchThingByIdCommand($id, $request->headers->get('user'),$request->headers->get('password'));
             $thing = $searchThingByIdCommandHandler->handle($command);
         } catch (\Exception $e) {
@@ -72,7 +75,7 @@ class ThingController extends Controller
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         $thingRepository->remove($thing);
-
+        $thingRepository->flush();
         return new JsonResponse('',204);
     }
 
