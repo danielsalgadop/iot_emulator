@@ -30,7 +30,7 @@ services:
     # please note that last definitions always *replace* previous ones
     app.repository.thing:
         class: App\Infrastructure\MySQLThingRepository
-        public: true  # lo hago public para acceder desde thingController::delete
+        public: true  # lo hago public para acceder desde thingController::delete, Y tb en thingController::create
         arguments:
             - "@doctrine.orm.default_entity_manager"
     app.command_handler.create_thing:

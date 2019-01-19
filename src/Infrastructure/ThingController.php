@@ -7,6 +7,7 @@ namespace App\Infrastructure;
 use App\Application\Command\Thing\GetActionsByThingIdCommand;
 use App\Application\Command\Thing\ExecuteActionCommand;
 use App\Application\CommandHandler\Thing\CreateThingHandler;
+use App\Domain\Dto\UserCredentialsDTO;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
 use App\Domain\Repository\ThingRepository;
@@ -68,7 +69,6 @@ class ThingController extends Controller
             $thingRepository = $this->get('app.repository.thing');
             $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
             $command = new SearchThingByIdCommand($id, $request->headers->get('user'),$request->headers->get('password'));
-            $command = new SearchThingByIdCommand($id, $request->headers->get('user'),$request->headers->get('password'));
             $thing = $searchThingByIdCommandHandler->handle($command);
         } catch (\Exception $e) {
 
@@ -83,21 +83,16 @@ class ThingController extends Controller
     {
         try{
             $array = $this->decodeJsonToArrayOrException($request->getContent());
-            if(!Thing::isIntegrityValidOnCreate($array)){
-                throw new Exception('missing data for Thing creation');
-            }
             $this->requestHasUserAndPasswordOrException($request);
-
-            if(!Thing::hasActionsAndPropertiesConcordance($array['links']['actions'], $array['links']['properties'])){
-                throw new Exception("No concordance for Actions and Properties");
-            };
-        die;
-
-
+            $userDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
             $createThingCommandHandler = $this->get('app.command_handler.create_thing');
-            $command = new CreateThingCommand($request->getContent(),$request->headers->get('user'),$request->headers->get('password'));
+            $command = new CreateThingCommand($array, $userDTO);
             $thing = $createThingCommandHandler->handle($command);
+            $thingRepository = $this->get('app.repository.thing');
+            $thingRepository->save($thing);
+            $thingRepository->flush();
+
         } catch (\Exception $e) {
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
@@ -107,7 +102,6 @@ class ThingController extends Controller
 
     public function executeAction($id,$action_name,Request $request)
     {
-        //file_put_contents("/tmp/debug.txt", var_export($request->getContent(), true) . PHP_EOL, FILE_APPEND);
 
         // find Thing
         $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
@@ -191,9 +185,9 @@ class ThingController extends Controller
         return $searchThingByIdCommandHandler->handle($command);
     }
 
+    // TODO: poner aqui un DTO userCredentials extractUserAndPasswordFromRequestOrException: DTO
     private function requestHasUserAndPasswordOrException(Request $request)
     {
-        file_put_contents("/tmp/debug.txt", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export($request, true) . PHP_EOL, FILE_APPEND);
         $user = $request->headers->get('user');
         $password = $request->headers->get('password');
         if(!isset($user) || !isset($password)){

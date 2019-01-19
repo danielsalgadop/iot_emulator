@@ -1,40 +1,46 @@
 <?php
 
 namespace App\Application\Command\Thing;
-
+use App\Domain\Dto\UserCredentialsDTO;
 
 class CreateThingCommand
 {
-    private $json;
-    private $user;
-    private $password;
+    private $array;
+    private $userCredentialsDTO;
 
-    public function __construct($json, string $user, string $password)
+    public function __construct(array $array, UserCredentialsDTO $userCredentialsDTO)
     {
-        $this->json     = $json;
-        $this->user     = $user;
-        $this->password = $password;
+        $this->array = $array;
+        $this->userCredentialsDTO = $userCredentialsDTO;
     }
 
-    public function getJson()
+    // Definition of iot
+    public function getArray()
     {
-        return $this->json;
+        return $this->array;
     }
     /**
      * @return string
      */
-    public function getUser(): string
+    public function getUserDTO(): UserCredentialsDTO
     {
-        return $this->user;
+        return $this->userCredentialsDTO;
     }
 
-    /**
-     * @return string
+    // DUDA
+    /*
+     * Enmascarar los getters para usar el UserDTO dentro de este CreateThingCommand, ¿tiene sentido?
+     * La otra opcion es donde se necesite (en Entity/Thing.php, en este caso) hace $userDto = $command->getUserDTO para
+     * obterner $userName = $userDto->getUser
      */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
+      public function getUserName(){
+       return $this->userCredentialsDTO->getUser;
+      }
+
+      public function getPassword(){
+       return $this->userCredentialsDTO->getPassword;
+      }
+
 
 
 }

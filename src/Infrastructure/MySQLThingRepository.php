@@ -6,6 +6,7 @@ namespace App\Infrastructure;
 use App\Domain\Entity\Thing;
 use App\Domain\Repository\ThingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Stmt\Throw_;
 
 class MySQLThingRepository implements ThingRepository
 {
@@ -20,18 +21,18 @@ class MySQLThingRepository implements ThingRepository
     {
         try {
             $this->em->persist($thing);
-            $this->em->flush();
+//            $this->em->flush();
         } catch (Exception $e) {
-            return $e->getMessage();
+            throw new \Exception($e->getMessage());
         }
     }
     public function remove(Thing $thing)
     {
         try {
             $this->em->remove($thing);
-            $this->em->flush();
+//            $this->em->flush();
         } catch (Exception $e) {
-            return $e->getMessage();
+            throw new \Exception($e->getMessage());
         }
     }
     public function searchThingByIdOrException(int $id): ?Thing
@@ -52,5 +53,13 @@ class MySQLThingRepository implements ThingRepository
 ////            throw UnknownPostException::withPostId($postId);
 //        }
 //        return $things[0];
+    }
+    public function flush()
+    {
+        try {
+            $this->em->flush();
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 }

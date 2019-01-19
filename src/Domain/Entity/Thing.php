@@ -2,10 +2,14 @@
 
 namespace App\Domain\Entity;
 
+use App\Domain\Dto\UserCredentialsDTO;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Domain\Entity\BasicThing;
+use App\Domain\Entity\Action;
+use App\Domain\Entity\Property;
+
+//use App\Domain\Entity\BasicThing
 /**
  * @ORM\Entity(repositoryClass="App\Domain\Repository\ThingRepository")
  */
@@ -143,5 +147,54 @@ class Thing
         $obj->name = $this->name;
         $obj->brand = $this->brand;
         return $obj;
+    }
+
+    // named constructor
+    public static function createThingFromArray(array $array, UserCredentialsDTO $UserCredentialsDTO): Thing{
+
+
+
+        //$name,$brand,$actionCollector, User $user
+
+        // validate
+        if(!Thing::isIntegrityValidOnCreate($array)){
+            throw new Exception('missing data for Thing creation');
+        }
+
+        if(!Thing::hasActionsAndPropertiesConcordance($array['links']['actions'], $array['links']['properties'])){
+            throw new Exception("No concordance for Actions and Properties");
+        }
+
+        $actionCollector = [];
+        for ($i = 0; $i < count($array['links']['actions']); $i++) {
+            $action = new Action();
+            $property = new Property();
+
+//            $property->setValue($array['links']['properties'][$i][$array['links']['actions'][$i]]);  // madre mia, muy enrevesado!
+            $property->setValue('ivan orihola');
+            $action->setProperty($property);
+            $action->setName($array['links']['actions'][$i]);
+            $actionCollector[] = $action;
+        }
+
+        /*foreach ($array->links->actions as $actionName) {
+        $action = new Action();
+        $property = new Property();
+        $property->setValue($actionName);  // we asume properties born with action name
+        $action->setProperty($property);
+        $action->setName($actionName);
+        $actionCollector[] = $action;
+        */
+        $user = new User();
+        $user->setName($UserCredentialsDTO->getName());
+        $user->setPassword($UserCredentialsDTO->getPassword());
+
+        // DUDA. esto ¿tiene q ser en este orden? crear User -> Crear Thing -> crear relacion user->setThing
+        // entiendo que dentro de Thing__construct valdria con hacer un $this->setUser, ¿no?
+        $thing = new Thing($array['name'],$array['brand'],$actionCollector,$user);
+        $user->setThing($thing);
+        return $thing;
+//        $this->thingRepository->save($thing);
+//        return new Thing();
     }
 }
