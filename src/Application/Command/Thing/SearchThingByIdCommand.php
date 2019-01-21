@@ -3,17 +3,17 @@
 namespace App\Application\Command\Thing;
 
 
+use App\Domain\Dto\UserCredentialsDTO;
+
 class SearchThingByIdCommand
 {
     private $id;
-    private $user;
-    private $password;
+    private $UserCredentialsDTO;
 
-    public function __construct(int $id, string $user, string $password)
+    public function __construct(int $id, UserCredentialsDTO $UserCredentialsDTO)
     {
         $this->id = $id;
-        $this->user = $user;
-        $this->password = $password;
+        $this->UserCredentialsDTO = $UserCredentialsDTO;
     }
 
     public function getId()
@@ -26,7 +26,7 @@ class SearchThingByIdCommand
     */
     public function getUser()
     {
-        return $this->user;
+        return $this->UserCredentialsDTO->getName();
     }
 
     /**
@@ -34,6 +34,6 @@ class SearchThingByIdCommand
      */
     public function getPassword()
     {
-        return $this->password;
+        return $this->UserCredentialsDTO->getPassword();
     }
 }

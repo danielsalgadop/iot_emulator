@@ -1,5 +1,7 @@
 PUT localhost:8000/1/properties/jsonAction1
 Content-Type: application/json
+user: user
+password: password
 
 {
   "XXXXXjsonAction1": "jsonActionUpdated"

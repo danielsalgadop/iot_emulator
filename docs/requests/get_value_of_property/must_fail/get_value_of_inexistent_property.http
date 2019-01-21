@@ -1,3 +1,5 @@
 GET localhost:8000/4/properties/BADproperty
+user: user
+password: password
 
 ###

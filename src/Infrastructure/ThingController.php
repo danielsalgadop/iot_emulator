@@ -39,25 +39,30 @@ class ThingController extends Controller
 
     public function index(): JsonResponse
     {
-        return new JsonResponse(["key"=>"listado de things"]);
+        $thingRepository = $this->get('app.repository.thing');
+        $array_ids = $thingRepository->getAllIdOThings();
+        $array_things = [];
+        foreach($array_ids as $id_thing){
+            $thing = $thingRepository->findThingById($id_thing);
+            $array_things[] = Thing::publicInfoAsObject($thing);
+        }
+        return new JsonResponse($array_things);
     }
 
-    public function search(int $id): JsonResponse
+    public function getThing(int $id, Request $request): JsonResponse
     {
-        // find Thing
-        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
-
         try{
-            $command = new SearchThingByIdCommand($id);
-            $thing = $searchThingByIdCommandHandler->handle($command);
+            $this->requestHasUserAndPasswordOrException($request);
+            $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+
+            $thing = $this->getThingByThingIdOrException($id, $UserCredentialsDTO);
+            // find Thing
         } catch (\Exception $e) {
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         $array = $thing->searchOutput();
         return new JsonResponse($array,201);
-//        return new JsonResponse(json_encode($thing));
-        return new JsonResponse(["will search for this "=>$id]);
     }
 
     public function delete(int $id, Request $request): JsonResponse
@@ -178,12 +183,13 @@ class ThingController extends Controller
 
     // TODO use it in this file where 'app.command_handler.search_thing_by_id' is being used
     // DUDA, esto es "sospechosamente" MUY parecido a thingRepository->searchThingByIdOrException($id)
-    private function getThingByThingIdOrException($id){
+    private function getThingByThingIdOrException($id, UserCredentialsDTO $UserCredentialsDTO){
 
         $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
-        $command = new SearchThingByIdCommand($id);
+        $command = new SearchThingByIdCommand($id,$UserCredentialsDTO);
         return $searchThingByIdCommandHandler->handle($command);
     }
+
 
     // TODO: poner aqui un DTO userCredentials extractUserAndPasswordFromRequestOrException: DTO
     private function requestHasUserAndPasswordOrException(Request $request)

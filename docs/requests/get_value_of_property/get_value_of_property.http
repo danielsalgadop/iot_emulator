@@ -3,10 +3,14 @@
 
 # we assume property name === action name (in fact, there is NO property_name)
 GET localhost:8000/9/properties/jsonAction1
+user: user
+password: password
 
 ###
 
 
 GET localhost:8000/9/properties/jsonAction2
+user: user
+password: password
 
 ###

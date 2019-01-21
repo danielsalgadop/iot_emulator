@@ -1,12 +1,27 @@
+# D=> dircect connectivity
+#
+#    REST URL 	                        POST 	GET 	PUT 	DELETE 	OPTIONS 	Details
+#       /                                       D                               List of things                UNICO sin credenciales
+#      {wt} 	                        G,C 	D,G,C 	D,G,C 	G,C 	D,G,C 	Thing Resource
+#      {wt}/model 	                    - 	    D,G,C 	G,C 	- 	    D,G,C 	Model Resource
+#      {wt}/properties 	                G,C 	D,G,C 	- 	    - 	    D,G,C 	Properties Resource
+#      {wt}/properties/{id} 	        - 	    D,G,C 	G,C 	- 	    D,G,C 	Properties Resource
+#      {wt}/actions 	                G,C 	D,G,C 	- 	    - 	    D,G,C 	Actions Resource
+#      {wt}/actions/{id} 	            D,G,C 	D,G,C 	- 	    - 	    D,G,C 	Actions Resource
+#      {wt}/actions/{id}/{actionId} 	- 	    D,G,C 	- 	    D,G,C 	D,G,C 	Actions Resource
+#      {wt}/things 	                    G,C 	G,C 	- 	    - 	    G,C 	Things Resource
+#      {wt}/things/{id} 	            - 	    G,C 	G,C 	G,C 	G,C 	Things Resource
+#      {wt}/subscriptions 	            - 	    D,G,C 	- 	    D,G,C 	D,G,C 	Subscriptions Resource
+
 index:
     path: /
     controller: App\Infrastructure\ThingController::index
     methods: GET
 
 # no need for credentials
-search:
+get_thing:
     path: /{id}
-    controller:     App\Infrastructure\ThingController::search
+    controller: App\Infrastructure\ThingController::getThing
     methods: GET
     requirements:
       id: '\d+'

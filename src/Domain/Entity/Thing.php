@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Domain\Entity\Action;
 use App\Domain\Entity\Property;
+use Symfony\Component\DependencyInjection\Tests\Fixtures\StdClassDecorator;
 
 //use App\Domain\Entity\BasicThing
 /**
@@ -196,5 +197,13 @@ class Thing
         return $thing;
 //        $this->thingRepository->save($thing);
 //        return new Thing();
+    }
+
+    public static function publicInfoAsObject(Thing $thing): \stdClass {
+        $publicThingInfo = new \stdClass();
+        $publicThingInfo->id = $thing->id;
+        $publicThingInfo->name = $thing->name;
+        $publicThingInfo->brand = $thing->brand;
+        return $publicThingInfo;
     }
 }
