@@ -1,6 +1,6 @@
 # emtpy set
 GET localhost:8000/2/actions
-user: user2
-password: password2
+user: user
+password: password
 
 ###

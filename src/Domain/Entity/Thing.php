@@ -151,11 +151,11 @@ class Thing
 
         // validate
         if(!Thing::isIntegrityValidOnCreate($array)){
-            throw new Exception('missing data for Thing creation');
+            throw new \Exception('missing data for Thing creation');
         }
 
         if(!Thing::hasActionsAndPropertiesConcordance($array['links']['actions'], $array['links']['properties'])){
-            throw new Exception("No concordance for Actions and Properties");
+            throw new \Exception("No concordance for Actions and Properties");
         }
 
         $actionCollector = [];
