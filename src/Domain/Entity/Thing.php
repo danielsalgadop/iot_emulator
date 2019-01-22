@@ -141,16 +141,8 @@ class Thing
         return true;
     }
 
-    public function searchOutput(){
-        // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
-        $obj = new \stdClass();
-        $obj->id = $this->id;
-        $obj->name = $this->name;
-        $obj->brand = $this->brand;
-        return $obj;
-    }
-
     // named constructor
+
     public static function createThingFromArray(array $array, UserCredentialsDTO $UserCredentialsDTO): Thing{
 
 
@@ -198,12 +190,23 @@ class Thing
 //        $this->thingRepository->save($thing);
 //        return new Thing();
     }
-
     public static function publicInfoAsObject(Thing $thing): \stdClass {
-        $publicThingInfo = new \stdClass();
-        $publicThingInfo->id = $thing->id;
-        $publicThingInfo->name = $thing->name;
-        $publicThingInfo->brand = $thing->brand;
-        return $publicThingInfo;
+        $obj = new \stdClass();
+        $obj->id = $thing->id;
+        $obj->name = $thing->name;
+        $obj->brand = $thing->brand;
+        return $obj;
+    }
+
+        // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
+    public static function privateInfoAsObject(Thing $thing){
+        $obj = Thing::publicInfoAsObject($thing);
+        $actions = $thing->getActions();
+        $obj->actions['link'] = "/actions";
+        foreach ($actions as $action){
+            $property = $action->getProperty();
+            $obj->actions['resources'][$action->getName()]['values'] = $property->getValue();
+        }
+        return $obj;
     }
 }

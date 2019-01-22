@@ -61,8 +61,8 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-        $array = $thing->searchOutput();
-        return new JsonResponse($array,201);
+        $obj = Thing::privateInfoAsObject($thing);
+        return new JsonResponse($obj,201);
     }
 
     public function delete(int $id, Request $request): JsonResponse
