@@ -134,13 +134,12 @@ class ThingController extends Controller
     }
     public function getActionsByThingId($id, Request $request)
     {
-
-
         try {
             $this->requestHasUserAndPasswordOrException($request);
             $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
+            $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
-            $command = new SearchThingByIdCommand($id,$request->headers->get('user'),$request->headers->get('password'));
+            $command = new SearchThingByIdCommand($id,$UserCredentialsDTO);
             $thing = $searchThingByIdCommandHandler->handle($command);
 
 
@@ -157,7 +156,8 @@ class ThingController extends Controller
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 
-        return new JsonResponse(json_encode($array_actions));
+
+        return new JsonResponse($array_actions);
     }
 
     public function getValueOfProperty($id,$property_name)
