@@ -145,10 +145,6 @@ class Thing
 
     public static function createThingFromArray(array $array, UserCredentialsDTO $UserCredentialsDTO): Thing{
 
-
-
-        //$name,$brand,$actionCollector, User $user
-
         // validate
         if(!Thing::isIntegrityValidOnCreate($array)){
             throw new \Exception('missing data for Thing creation');
@@ -163,21 +159,12 @@ class Thing
             $action = new Action();
             $property = new Property();
 
-//            $property->setValue($array['links']['properties'][$i][$array['links']['actions'][$i]]);  // madre mia, muy enrevesado!
-            $property->setValue('ivan orihola');
+            $property->setValue($array['links']['properties'][$i][$array['links']['actions'][$i]]); // madre mia, muy enrevesado!
             $action->setProperty($property);
             $action->setName($array['links']['actions'][$i]);
             $actionCollector[] = $action;
         }
 
-        /*foreach ($array->links->actions as $actionName) {
-        $action = new Action();
-        $property = new Property();
-        $property->setValue($actionName);  // we asume properties born with action name
-        $action->setProperty($property);
-        $action->setName($actionName);
-        $actionCollector[] = $action;
-        */
         $user = new User();
         $user->setName($UserCredentialsDTO->getName());
         $user->setPassword($UserCredentialsDTO->getPassword());
@@ -187,9 +174,8 @@ class Thing
         $thing = new Thing($array['name'],$array['brand'],$actionCollector,$user);
         $user->setThing($thing);
         return $thing;
-//        $this->thingRepository->save($thing);
-//        return new Thing();
     }
+
     public static function publicInfoAsObject(Thing $thing): \stdClass {
         $obj = new \stdClass();
         $obj->id = $thing->id;
