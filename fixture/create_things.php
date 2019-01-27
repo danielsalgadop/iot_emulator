@@ -2,8 +2,8 @@
 error_reporting(-1);
 
 define('ENDPOINT','http://localhost/create');
-define('ACTION_PREFIX','hardCodedAction');
-define('PROPERTY_PREFIX','hardCodedProperty');
+define('ACTION_PREFIX','action_name');
+define('PROPERTY_PREFIX','property_value');
 
 // TODO: mirar esto para evitar tanto 'handshake'
 // http://php.net/curl_multi_init
@@ -42,8 +42,8 @@ for($i=1;$i<5;$i++){
 
 
     $data = array(
-        'name' => 'curlName'.$i,
-        'brand' => 'curlBrand'.$i,
+        'name' => 'thing_name'.$i,
+        'brand' => 'thing_brand'.$i,
 
     );
 

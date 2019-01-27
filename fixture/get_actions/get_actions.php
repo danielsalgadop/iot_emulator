@@ -3,7 +3,7 @@
 error_reporting(-1);
 
 define('ENDPOINT','http://localhost');
-define('ACTION_PREFIX','hardCodedAction');
+define('ACTION_PREFIX','action_name');
 
 if(!isset($argv[1])){
     die('usage: need thing id (int)'.PHP_EOL);

@@ -9,10 +9,10 @@ password: password18
   "links":
   {
     "properties":[
-      {"jsonAction1":"jsonActionValue1"},
-      {"jsonAction2":"jsonActionValue2"}
+      {"action_name1":"property_value1"},
+      {"action_name2":"property_value2"}
     ],
-    "actions":["jsonAction1","jsonAction2"]
+    "actions":["action_name1","action_name2"]
   }
 }
 

@@ -1,6 +1,0 @@
-# emtpy set, the thing we are asking has no actions
-GET localhost:8000/2/actions
-user: user
-password: password
-
-###

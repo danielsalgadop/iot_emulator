@@ -2,14 +2,14 @@
 # GET {wt}/properties/{acceleration}
 
 # we assume property name === action name (in fact, there is NO property_name)
-GET localhost:8000/19/properties/jsonAction1
+GET localhost:8000/1/properties/action_name1
 user: user
 password: password
 
 ###
 
 
-GET localhost:8000/9/properties/jsonAction2
+GET localhost:8000/9/properties/action_name2
 user: user
 password: password
 

@@ -1,12 +1,12 @@
 # PUT {wt}/properties/temperature/
 
-PUT localhost:8000/1/properties/jsonAction2
+PUT localhost:8000/1/properties/action_name2
 Content-Type: application/json
 user: user
 password: password
 
 {
-  "jsonAction2": "jsonActionUpdated"
+  "action_name2": "action_nameUpdated"
 }
 
 ###

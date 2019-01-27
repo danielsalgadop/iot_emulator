@@ -9,10 +9,10 @@ password: password
   "links":
   {
     "properties":[
-      {"jsonAction1WRONG":"jsonActionValue1"},
-      {"jsonAction2":"jsonActionValue2"}
+      {"action_name1WRONG":"action_nameValue1"},
+      {"action_name2":"action_nameValue2"}
     ],
-    "actions":["jsonAction1","jsonAction2"]
+    "actions":["action_name1","action_name2"]
   }
 }
 

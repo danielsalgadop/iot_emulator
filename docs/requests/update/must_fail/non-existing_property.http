@@ -1,10 +1,10 @@
-PUT localhost:8000/1/properties/jsonAction1
+PUT localhost:8000/1/properties/action_name1
 Content-Type: application/json
 user: user
 password: password
 
 {
-  "XXXXXjsonAction1": "jsonActionUpdated"
+  "XXXXXaction_name1": "action_nameUpdated"
 }
 
 ###

@@ -69,18 +69,18 @@ class ThingController extends Controller
     {
         try{
             $this->requestHasUserAndPasswordOrException($request);
+            $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+
 
             // TODO use getThingByThingIdOrException
             $thingRepository = $this->get('app.repository.thing');
-            $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
-            $command = new SearchThingByIdCommand($id, $request->headers->get('user'),$request->headers->get('password'));
-            $thing = $searchThingByIdCommandHandler->handle($command);
+            $thing = $this->getThingByThingIdOrException($id, $UserCredentialsDTO);
+            $thingRepository->remove($thing);
+            $thingRepository->flush();
         } catch (\Exception $e) {
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-        $thingRepository->remove($thing);
-        $thingRepository->flush();
         return new JsonResponse('',204);
     }
 
@@ -89,10 +89,10 @@ class ThingController extends Controller
         try{
             $array = $this->decodeJsonToArrayOrException($request->getContent());
             $this->requestHasUserAndPasswordOrException($request);
-            $userDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+            $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
             $createThingCommandHandler = $this->get('app.command_handler.create_thing');
-            $command = new CreateThingCommand($array, $userDTO);
+            $command = new CreateThingCommand($array, $UserCredentialsDTO);
             $thing = $createThingCommandHandler->handle($command);
             $thingRepository = $this->get('app.repository.thing');
             $thingRepository->save($thing);
@@ -160,23 +160,23 @@ class ThingController extends Controller
         return new JsonResponse($array_actions);
     }
 
-    public function getValueOfProperty($id,$property_name)
+    public function getValueOfProperty($id,$property_name, Request $request)
     {
         # we assume property name === action name (in fact, there is NO property_name)
 
         try{
-
-            $thing = $this->getThingByThingIdOrException($id);
+            $this->requestHasUserAndPasswordOrException($request);
+            $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+            $thing = $this->getThingByThingIdOrException($id,$UserCredentialsDTO);
             $actions = $thing->getActions();
             foreach ($actions as $action) {
                 if($action->getName() === $property_name){
                     $property = $action->getProperty();
                     return new JsonResponse($property->asArray());
                 }
-        }
+            }
         } catch (\Exception $e){
             return new JsonResponse(['error' => $e->getMessage()], 500);
-
         }
         return new JsonResponse(['error' => "unknown Property"], 500);
     }
