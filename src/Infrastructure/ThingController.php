@@ -7,7 +7,7 @@ namespace App\Infrastructure;
 use App\Application\Command\Thing\GetActionsByThingIdCommand;
 use App\Application\Command\Thing\ExecuteActionCommand;
 use App\Application\CommandHandler\Thing\CreateThingHandler;
-use App\Domain\Dto\UserCredentialsDTO;
+use App\Application\Dto\UserCredentialsDTO;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
 use App\Domain\Repository\ThingRepository;

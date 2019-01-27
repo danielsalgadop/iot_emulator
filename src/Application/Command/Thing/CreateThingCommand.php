@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Application\Command\Thing;
-use App\Domain\Dto\UserCredentialsDTO;
+use App\Application\Dto\UserCredentialsDTO;
 
 class CreateThingCommand
 {

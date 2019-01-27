@@ -1,5 +1,5 @@
 <?php
-namespace App\Domain\Dto;
+namespace App\Application\Dto;
 
 class UserCredentialsDTO
 {
