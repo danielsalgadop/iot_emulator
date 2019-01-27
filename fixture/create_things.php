@@ -59,16 +59,16 @@ function buildPropertiesAndActions(int $i):array{
 
 function buildProperties(int $i): array{
     $properties = [];
-    for($k=0;$k<$i;$k++){
-        $properties[]=[ACTION_PREFIX.$i => PROPERTY_PREFIX.$i];
+    for($j=1;$j<=$i;$j++){
+        $properties[]=[ACTION_PREFIX.$j => PROPERTY_PREFIX.$j];
     }
     return $properties;
 }
 
 function buildActions(int $i): array{
     $actions = [];
-    for($k=0;$k<$i;$k++) {
-        $actions[]=ACTION_PREFIX.$i;
+    for($j=1;$j<=$i;$j++) {
+        $actions[]=ACTION_PREFIX.$j;
     }
     return $actions;
 }
