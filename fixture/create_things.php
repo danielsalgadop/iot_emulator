@@ -2,39 +2,18 @@
 error_reporting(-1);
 
 define('ENDPOINT','http://localhost/create');
-
+define('ACTION_PREFIX','hardCodedAction');
+define('PROPERTY_PREFIX','hardCodedProperty');
 
 // TODO: mirar esto para evitar tanto 'handshake'
 // http://php.net/curl_multi_init
 
-function sendCurl(){
+function sendCurl($create_thing_payload){
     $time = time();
 
+//    var_dump($create_thing_payload);
 
-    $data = array(
-    'name' => 'curlName',
-    'brand' => 'curlBrand',
-    'links' =>
-        array (
-            'properties' =>
-                array (
-                    0 =>
-                        array (
-                            'curlAction1' => 'curlActionValue1',
-                        ),
-                    1 =>
-                        array (
-                            'curlAction2' => 'curlActionValue2',
-                        ),
-                ),
-            'actions' =>
-                array (
-                    0 => 'curlAction1',
-                    1 => 'curlAction2',
-                ),
-        ),
-);
-    $data_string = json_encode($data);
+    $data_string = json_encode($create_thing_payload);
 
     $ch = curl_init(ENDPOINT);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -56,4 +35,40 @@ function sendCurl(){
 }
 
 
-sendCurl();
+// create things loop
+
+for($i=1;$i<5;$i++){
+
+
+
+    $data = array(
+        'name' => 'curlName'.$i,
+        'brand' => 'curlBrand'.$i,
+
+    );
+
+    $data['links'] = buildPropertiesAndActions($i);
+    sendCurl($data);
+}
+
+function buildPropertiesAndActions(int $i):array{
+    $array['actions'] = buildActions($i);
+    $array['properties'] = buildProperties($i);
+    return $array;
+}
+
+function buildProperties(int $i): array{
+    $properties = [];
+    for($k=0;$k<$i;$k++){
+        $properties[]=[ACTION_PREFIX.$i => PROPERTY_PREFIX.$i];
+    }
+    return $properties;
+}
+
+function buildActions(int $i): array{
+    $actions = [];
+    for($k=0;$k<$i;$k++) {
+        $actions[]=ACTION_PREFIX.$i;
+    }
+    return $actions;
+}
