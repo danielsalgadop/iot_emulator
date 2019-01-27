@@ -21,8 +21,7 @@ class ExecuteActionHandler
 
         // Check if action exists and remove it if it does. Or exception if it does not
 
-        $arrayOfPropertiesAndValues = Thing::decodeJsonToObjectOrException($command->getJsonOfPropertiesAndValues());
-
+        $arrayOfPropertiesAndValues = $command->getArrayOfPropertyNameAndValue();
 
         foreach ($thing->getActions() as $action){
             $action_name = $action->getName();
@@ -30,12 +29,15 @@ class ExecuteActionHandler
 
                 $property = $action->getProperty();
                 // We are assuming 1 action has 1 property
-                $property->setValue($arrayOfPropertiesAndValues->$action_name);
+                if(!isset($arrayOfPropertiesAndValues[$action_name])){
+                    throw new \Exception("Non-existing Property to update");
+                }
+                $property->setValue($arrayOfPropertiesAndValues[$action_name]);
                 $this->thingRepository->save($thing);
                 return true;
             }
         }
         
-        throw new \Exception("Non-existing Action for update");
+        throw new \Exception("Non-existing Action to update");
     }
 }

@@ -1,11 +1,25 @@
 #POST {wt}/actions/reboot
 
-POST localhost:8000/1/actions/action_name2
+### MUST WORK
+POST localhost:8000/1/actions/action_name1
 Content-Type: application/json
+user: user
+password: password
 
 
 {
-  "action_name2":"nuevoValor6"
+  "action_name1":"new_property_value"
+}
+
+### MUST FAIL
+POST localhost:8000/1/actions/action_name1
+Content-Type: application/json
+user: user
+password: password
+
+
+{
+  "INFORRECT_action_name":"new_property_value"
 }
 
 ###
@@ -13,10 +27,12 @@ Content-Type: application/json
 # MUST fail invalid action in url
 POST localhost:8000/1/actions/BADaction_name1
 Content-Type: application/json
+user: user
+password: password
 
 
 {
-  "action_name1":"nuevoValor"
+  "action_name1":"new_property_value"
 }
 
 ###
@@ -25,10 +41,12 @@ Content-Type: application/json
 # MUST fail invalid action in payload
 POST localhost:8000/1/actions/action_name1
 Content-Type: application/json
+user: user
+password: password
 
 
 {
-  "BADaction_name1":"nuevoValor"
+  "BADaction_name1":"new_property_value"
 }
 
 ###

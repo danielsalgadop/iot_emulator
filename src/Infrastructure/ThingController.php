@@ -108,15 +108,18 @@ class ThingController extends Controller
     public function executeAction($id,$action_name,Request $request)
     {
 
-        // find Thing
-        $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
-        $executeActionHandler = $this->get('app.command_handler.execute_action');
-
         try{
-            $command = new SearchThingByIdCommand($id);
-            $thing = $searchThingByIdCommandHandler->handle($command);
-            $command = new ExecuteActionCommand($thing, $action_name, $request->getContent());
+            $this->requestHasUserAndPasswordOrException($request);
+            $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+            $thing = $this->getThingByThingIdOrException($id, $UserCredentialsDTO);
+
+            $executeActionHandler = $this->get('app.command_handler.execute_action');
+            $array = $this->decodeJsonToArrayOrException($request->getContent());
+
+            $command = new ExecuteActionCommand($thing, $action_name, $array);
             $executeActionHandler->handle($command);
+            $thingRepository = $this->get('app.repository.thing');
+            $thingRepository->flush();
         } catch (\Exception $e) {
 
             return new JsonResponse(['error' => $e->getMessage()], 500);

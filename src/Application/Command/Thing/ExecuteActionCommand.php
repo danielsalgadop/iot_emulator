@@ -9,7 +9,7 @@ class ExecuteActionCommand
     // DUDA, se podria sacar todo del request, y no enviar ni $id, ni $action
     private $thing;
     private $action;
-    private $jsonOfPropertiesAndValues;
+    private $arrayPropertyAndValue;
 
     /**
      * @return Thing
@@ -19,9 +19,9 @@ class ExecuteActionCommand
         return $this->thing;
     }
 
-    public function getJsonOfPropertiesAndValues(): string
+    public function getArrayOfPropertyNameAndValue(): array
     {
-        return $this->jsonOfPropertiesAndValues;
+        return $this->arrayPropertyAndValue;
     }
 
 
@@ -30,11 +30,11 @@ class ExecuteActionCommand
         return $this->action;
     }
 
-    public function __construct(Thing $thing, string $action, string $jsonOfPropertiesAndValues)
+    public function __construct(Thing $thing, string $action, array $arrayPropertyAndValue)
     {
         $this->thing = $thing;
         $this->action = $action;
-        $this->jsonOfPropertiesAndValues = $jsonOfPropertiesAndValues;
+        $this->arrayPropertyAndValue = $arrayPropertyAndValue;
     }
 
 }
