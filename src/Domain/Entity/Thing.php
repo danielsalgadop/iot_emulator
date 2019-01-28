@@ -3,6 +3,7 @@
 namespace App\Domain\Entity;
 
 use App\Application\Dto\UserCredentialsDTO;
+use App\Infrastructure\Thing\Serializer\ThingWithoutCredentials;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -92,6 +93,16 @@ class Thing
         }
 
         return $this;
+    }
+
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function removeAction(Action $action): self
@@ -186,6 +197,7 @@ class Thing
 
         // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
     public static function privateInfoAsObject(Thing $thing){
+        $obj2 = ThingWithoutCredentials::asObject($thing);
         $obj = Thing::publicInfoAsObject($thing);
         $actions = $thing->getActions();
         $obj->actions['link'] = "/actions";
@@ -193,6 +205,6 @@ class Thing
             $property = $action->getProperty();
             $obj->actions['resources'][$action->getName()]['values'] = $property->getValue();
         }
-        return $obj;
+        return $obj2;
     }
 }
