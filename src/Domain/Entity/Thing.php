@@ -206,5 +206,6 @@ class Thing
             $obj->actions['resources'][$action->getName()]['values'] = $property->getValue();
         }
         return $obj2;
+        return $obj;
     }
 }

@@ -11,6 +11,7 @@ use App\Application\Dto\UserCredentialsDTO;
 use App\Domain\Entity\Thing;
 use App\Domain\Entity\Action;
 use App\Domain\Repository\ThingRepository;
+use App\Infrastructure\Thing\Serializer\ThingWithCredentials;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,8 +62,8 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-        $obj = Thing::privateInfoAsObject($thing);
-        return new JsonResponse($obj,201);
+//        $obj = Thing::privateInfoAsObject($thing);
+        return new JsonResponse(ThingWithCredentials::asObject($thing),201);
     }
 
     public function delete(int $id, Request $request): JsonResponse

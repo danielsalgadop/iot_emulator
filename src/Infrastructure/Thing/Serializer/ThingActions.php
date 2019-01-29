@@ -8,14 +8,17 @@ class ThingActions
 {
     public static function asJson(Thing $thing)
     {
-        $obj = ThingWithoutCredentials::asObject($thing);
-        $obj = Thing::publicInfoAsObject($thing);
+        return json_encode(self::asObject($thing));
+    }
+
+    public static function asObject(Thing $thing)
+    {
         $actions = $thing->getActions();
         $obj->actions['link'] = "/actions";
         foreach ($actions as $action){
             $property = $action->getProperty();
             $obj->actions['resources'][$action->getName()]['values'] = $property->getValue();
         }
-        return json_encode($obj);
+        return $obj;
     }
 }
