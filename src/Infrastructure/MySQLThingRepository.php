@@ -6,7 +6,7 @@ namespace App\Infrastructure;
 use App\Domain\Entity\Thing;
 use App\Domain\Repository\ThingRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Stmt\Throw_;
+use PhpParser\Node\Stmt\Throw_;  // DUDA este Throw_ es correcto?
 
 class MySQLThingRepository implements ThingRepository
 {
