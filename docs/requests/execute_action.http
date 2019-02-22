@@ -1,7 +1,7 @@
 #POST {wt}/actions/reboot
 
 ### MUST WORK
-POST localhost:8000/1/actions/action_name1
+POST localhost:8001/1/actions/action_name1
 Content-Type: application/json
 user: user
 password: password
@@ -12,7 +12,7 @@ password: password
 }
 
 ### MUST FAIL
-POST localhost:8000/1/actions/action_name1
+POST localhost:8001/1/actions/action_name1
 Content-Type: application/json
 user: user
 password: password
@@ -25,7 +25,7 @@ password: password
 ###
 
 # MUST fail invalid action in url
-POST localhost:8000/1/actions/BADaction_name1
+POST localhost:8001/1/actions/BADaction_name1
 Content-Type: application/json
 user: user
 password: password
@@ -39,7 +39,7 @@ password: password
 
 
 # MUST fail invalid action in payload
-POST localhost:8000/1/actions/action_name1
+POST localhost:8001/1/actions/action_name1
 Content-Type: application/json
 user: user
 password: password

@@ -17,7 +17,7 @@ function sendCurl($id){
 
     $ch = curl_init(ENDPOINT.'/'.$id);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-    curl_setopt($ch, CURLOPT_PORT , 8000);
+    curl_setopt($ch, CURLOPT_PORT , 8001);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'user: user',

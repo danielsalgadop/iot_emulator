@@ -1,5 +1,5 @@
 # 999 dows not exist
-GET localhost:8000/999/properties/action_name1
+GET localhost:8001/999/properties/action_name1
 user: user
 password: password
 

@@ -18,7 +18,7 @@ function sendCurl($create_thing_payload){
     $ch = curl_init(ENDPOINT);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-    curl_setopt($ch, CURLOPT_PORT , 8000);
+    curl_setopt($ch, CURLOPT_PORT , 8001);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',

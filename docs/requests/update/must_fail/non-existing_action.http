@@ -1,4 +1,4 @@
-PUT localhost:8000/1/properties/XXXXaction_name1
+PUT localhost:8001/1/properties/XXXXaction_name1
 Content-Type: application/json
 user: user
 password: password
