@@ -44,7 +44,8 @@ class ThingController extends Controller
         $array_ids = $thingRepository->getAllIdOThings();
         $array_things = [];
         foreach($array_ids as $id_thing){
-            $thing = $thingRepository->findThingById($id_thing);
+//            $thing = $thingRepository->searchThingByIdOrException($id_thing);
+            $thing = $thingRepository->findThingById($id_thing);  // TODO: creo que esto esta obsoleto, cambiar por searchThingByIdOrException
             $array_things[] = Thing::publicInfoAsObject($thing);
         }
         return new JsonResponse($array_things);

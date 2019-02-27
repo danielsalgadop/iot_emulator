@@ -67,6 +67,8 @@ class MySQLThingRepository implements ThingRepository
         $result = $this->em->createQuery("SELECT T.id FROM App:Thing T")->getArrayResult();
         return array_map('current', $result);
     }
+
+    // TODO: creo que está obsoleto, cambiar por searchThingByIdOrException
     public function findThingById($id): Thing
     {
         return $this->em->find(Thing::class, $id);
