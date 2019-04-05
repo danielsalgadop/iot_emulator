@@ -13,7 +13,7 @@ class ThingWithCredentials
         $obj->id = $thing->getId();
         $obj->name = $thing->getName();
         $obj->brand = $thing->getBrand();
-        $obj->actions = ThingActions::asObject($thing);
+        $obj->links = ThingActions::asObject($thing);
         return $obj;
     }
 }
