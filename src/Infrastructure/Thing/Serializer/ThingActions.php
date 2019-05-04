@@ -2,6 +2,7 @@
 
 
 namespace App\Infrastructure\Thing\Serializer;
+
 use App\Domain\Entity\Thing;
 
 class ThingActions
@@ -13,10 +14,12 @@ class ThingActions
 
     public static function asObject(Thing $thing)
     {
-        $actions = $thing->getActions();
+        $obj = new \stdClass();
         $obj->actions['link'] = "/actions";
-        foreach ($actions as $action){
+
+        foreach ($thing->getActions() as $action) {
             $property = $action->getProperty();
+
             $obj->actions['resources'][$action->getName()]['values'] = $property->getValue();
         }
         return $obj;

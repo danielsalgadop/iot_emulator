@@ -1,4 +1,5 @@
-# emtpy set
+# httpie
+# http GET localhost:8001/4/actions  user:user password:password
 GET localhost:8001/4/actions
 user: user
 password: password
