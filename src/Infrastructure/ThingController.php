@@ -61,10 +61,10 @@ class ThingController extends Controller
             // find Thing
         } catch (\Exception $e) {
 
-            return new JsonResponse(['status' => false, 'message' => $e->getMessage(), 'data' => null], 500);
+            return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 //        $obj = Thing::privateInfoAsObject($thing);
-        return new JsonResponse(['status' => true, 'message' => '', 'data' => ThingWithCredentials::asObject($thing)],201);
+        return new JsonResponse(ThingWithCredentials::asObject($thing),201);
     }
 
     public function delete(int $id, Request $request): JsonResponse
