@@ -12,6 +12,7 @@ use App\Domain\Entity\Property;
 use Symfony\Component\DependencyInjection\Tests\Fixtures\StdClassDecorator;
 
 //use App\Domain\Entity\BasicThing
+
 /**
  * @ORM\Entity(repositoryClass="App\Domain\Repository\ThingRepository")
  */
@@ -41,11 +42,11 @@ class Thing
 
 
     /**
-    * @ORM\OneToOne(targetEntity="App\Domain\Entity\User", mappedBy="thing", cascade={"persist", "remove"})
-    */
+     * @ORM\OneToOne(targetEntity="App\Domain\Entity\User", mappedBy="thing", cascade={"persist", "remove"})
+     */
     private $user;
 
-    public function __construct($name,$brand,$actionCollector, User $user)
+    public function __construct($name, $brand, $actionCollector, User $user)
     {
         $this->name = $name;
         $this->brand = $brand;
@@ -59,14 +60,14 @@ class Thing
     }
 
 
-    public static function isIntegrityValidOnCreate(array $data): bool{
-        if(
+    public static function isIntegrityValidOnCreate(array $data): bool
+    {
+        if (
             isset($data['brand']) &&
             isset($data['name']) &&
             isset($data['links']['actions']) &&
             isset($data['links']['properties'])
-        )
-        {
+        ) {
             return true;
         }
         return false;
@@ -131,11 +132,8 @@ class Thing
         if ($this !== $user->getIdThing()) {
             $user->setIdThing($this);
         }
-
         return $this;
     }
-
-
 
 
     public static function hasActionsAndPropertiesConcordance(array $actions, array $properties): bool
@@ -145,7 +143,7 @@ class Thing
             return false;
         }
         for ($i = 0; $i < count($actions); $i++) {
-            if (!isset($properties[$i][$actions[$i]] )) {
+            if (!isset($properties[$i][$actions[$i]])) {
                 return false;
             }
         }
@@ -154,14 +152,15 @@ class Thing
 
     // named constructor
 
-    public static function createThingFromArray(array $array, UserCredentialsDTO $UserCredentialsDTO): Thing{
+    public static function createThingFromArray(array $array, UserCredentialsDTO $UserCredentialsDTO): Thing
+    {
 
         // validate
-        if(!Thing::isIntegrityValidOnCreate($array)){
+        if (!Thing::isIntegrityValidOnCreate($array)) {
             throw new \Exception('missing data for Thing creation');
         }
 
-        if(!Thing::hasActionsAndPropertiesConcordance($array['links']['actions'], $array['links']['properties'])){
+        if (!Thing::hasActionsAndPropertiesConcordance($array['links']['actions'], $array['links']['properties'])) {
             throw new \Exception("No concordance for Actions and Properties");
         }
 
@@ -182,12 +181,13 @@ class Thing
 
         // DUDA. esto ¿tiene q ser en este orden? crear User -> Crear Thing -> crear relacion user->setThing
         // entiendo que dentro de Thing__construct valdria con hacer un $this->setUser, ¿no?
-        $thing = new Thing($array['name'],$array['brand'],$actionCollector,$user);
+        $thing = new Thing($array['name'], $array['brand'], $actionCollector, $user);
         $user->setThing($thing);
         return $thing;
     }
 
-    public static function publicInfoAsObject(Thing $thing): \stdClass {
+    public static function publicInfoAsObject(Thing $thing): \stdClass
+    {
         $obj = new \stdClass();
         $obj->id = $thing->id;
         $obj->name = $thing->name;
@@ -195,13 +195,14 @@ class Thing
         return $obj;
     }
 
-        // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
-    public static function privateInfoAsObject(Thing $thing){
+    // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
+    public static function privateInfoAsObject(Thing $thing)
+    {
         $obj2 = ThingWithoutCredentials::asObject($thing);
         $obj = Thing::publicInfoAsObject($thing);
         $actions = $thing->getActions();
         $obj->actions['link'] = "/actions";
-        foreach ($actions as $action){
+        foreach ($actions as $action) {
             $property = $action->getProperty();
             $obj->actions['resources'][$action->getName()]['values'] = $property->getValue();
         }
