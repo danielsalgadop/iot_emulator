@@ -6,12 +6,12 @@ use App\Application\Dto\UserCredentialsDTO;
 class SearchThingByIdCommand
 {
     private $id;
-    private $UserCredentialsDTO;
+    private $userCredentialsDTO;
 
-    public function __construct(int $id, UserCredentialsDTO $UserCredentialsDTO)
+    public function __construct(int $id, UserCredentialsDTO $userCredentialsDTO)
     {
         $this->id = $id;
-        $this->UserCredentialsDTO = $UserCredentialsDTO;
+        $this->UserCredentialsDTO = $userCredentialsDTO;
     }
 
     public function getId()
@@ -24,7 +24,7 @@ class SearchThingByIdCommand
     */
     public function getUser()
     {
-        return $this->UserCredentialsDTO->getName();
+        return $this->userCredentialsDTO->getName();
     }
 
     /**
@@ -32,6 +32,6 @@ class SearchThingByIdCommand
      */
     public function getPassword()
     {
-        return $this->UserCredentialsDTO->getPassword();
+        return $this->userCredentialsDTO->getPassword();
     }
 }
