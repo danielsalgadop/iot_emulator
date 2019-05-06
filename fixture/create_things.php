@@ -8,21 +8,21 @@ define('PROPERTY_PREFIX','property_value');
 // TODO: mirar esto para evitar tanto 'handshake'
 // http://php.net/curl_multi_init
 
-function sendCurl($create_thing_payload){
+function sendCurl($createThingPayload){
     $time = time();
 
-//    var_dump($create_thing_payload);
+//    var_dump($createThingPayload);
 
-    $data_string = json_encode($create_thing_payload);
+    $dataString = json_encode($createThingPayload);
 
     $ch = curl_init(ENDPOINT);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
     curl_setopt($ch, CURLOPT_PORT , 8001);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
-            'Content-Length: ' . strlen($data_string),
+            'Content-Length: ' . strlen($dataString),
             'user: user',
             'password: password'
         )
