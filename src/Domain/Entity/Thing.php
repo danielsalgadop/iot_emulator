@@ -62,16 +62,34 @@ class Thing
 
     public static function isIntegrityValidOnCreate(array $data): bool
     {
-        if (
-            isset($data['brand']) &&
-            isset($data['name']) &&
-            isset($data['links']['actions']) &&
-            isset($data['links']['properties'])
-        ) {
+        if(is_array($data['links']) && self::isValidLinks($data['links']) && isset($data['brand']) && isset($data['name'])
+            ){
+                $trimmedBrand = trim($data['brand']);
+                $trimmedName = trim($data['name']);
+
+                if($trimmedBrand === '' || $trimmedName === '' ){
+                    return false;
+                }
+                return true;
+        }
+        return false;
+    }
+
+    private static function isValidLinks(array $links): bool
+    {
+        if(isset($links['actions']) && isset($links['properties'])){
+
+            $trimmedActions = trim($links['actions']);
+            $trimmedProperties = trim($links['properties']);
+
+            if($trimmedActions === '' || $trimmedProperties === ''){
+                return false;
+            }
             return true;
         }
         return false;
     }
+
 
     public function getId(): ?int
     {
