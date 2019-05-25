@@ -58,3 +58,8 @@ get_actions:
     methods: GET
     requirements:
       id: '\d+'
+
+
+fallback_route:
+    path: /{url}
+    controller: App\Infrastructure\FallbackController::fallback

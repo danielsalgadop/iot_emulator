@@ -1,7 +1,7 @@
 POST http://localhost:8001/create
 Content-Type: application/json
-user: user18
-password: password18
+user: user
+password: password
 
 {
   "name": "jsonName",
