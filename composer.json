@@ -1,4 +1,6 @@
 {
+    "name": "danielsalgadop/iot_emulator",
+    "description": "iot emulator built in symfony 4",
     "type": "project",
     "license": "proprietary",
     "require": {
