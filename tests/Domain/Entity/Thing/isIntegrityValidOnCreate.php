@@ -1,4 +1,6 @@
 <?php
+// TODO: use phpunit dataproviders
+
 
 namespace App\Tests\Domain\Entity\Thing;
 
@@ -8,201 +10,158 @@ use App\Domain\Entity\Thing;
 
 class isIntegrityValidOnCreate extends TestCase
 {
-    /**
-     * @dataProvider validSerializedThingsProvider
-     */
-    public function testValidSerializedThingShoudReturnTrue($validSerializedThing)
+    public function testValidSerializedThingShouldReturnTrue()
     {
-        $this->assertTrue(Thing::isIntegrityValidOnCreate($validSerializedThing));
+        foreach ( $this->myArrayOfValidThingAsArrayProvider() as $validThingAsArray) {
+            $this->assertTrue(Thing::isIntegrityValidOnCreate($validThingAsArray));
+        }
     }
 
-    /**
-     * @dataProvider invalidSerializedThingsProvider
-     */
-    /*public function testInvalidSerializedThingShouldReturnFalse($nullNameNullBrandNllLinksSerializedThing)
+    public function testInvalidSerializedThingShouldReturnFalse()
     {
-//        var_dump($nullNameNullBrandNllLinksSerializedThing);
-        $this->assertFalse(Thing::isIntegrityValidOnCreate($nullNameNullBrandNllLinksSerializedThing));
-    }*/
-
-    public function validSerializedThingsProvider()
-    {
-        return
-            [
-                'one' =>
-                    [
-                        [
-                            'brand' => 'brandValue1',
-                            'name' => 'nameValue1',
-                            'links' => [
-                                'properties' => ['actionsValue1' => 'propertiesValue1'],
-                                'actions' => 'actionsValue1',
-                            ],
-                        ],
-                    ],
-                'two' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'properties' => ['actionsValue1' => 'propertiesValue1'],
-                                'actions' => 'actionsValue1',
-                            ],
-                        ],
-                    ],
-                'permisiveWithExtraKeys' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'extraKey' => 'extraKeyValue',
-                            'links' => [
-                                'properties' => ['actionsValue1' => 'propertiesValue1'],
-                                'actions' => 'actionsValue1',
-                            ],
-                        ],
-                    ],
-            ];
-
+//        $invalidArrayOfArrays
+        foreach ($this->myArrayOfInvalidThingAsArrayProvider() as $invalidThingAsArray) {
+            $this->assertFalse(Thing::isIntegrityValidOnCreate($invalidThingAsArray));
+        }
     }
 
-    public function invalidSerializedThingsProvider()
+
+    public function myArrayOfValidThingAsArrayProvider()
     {
-        return
-            [
-                'nullBrand' =>
+        return [
+            [ // simplest valid
+                'name' => 'thingName',
+                'brand' => 'thingBrand',
+                'links' =>
                     [
-                        [
-                            'brand' => null,
-                            'name' => 'nameValue',
-                            'links' => [
-                                'properties' => 'propertiesValue',
-                                'actions' => 'actionsValue',
+                        'properties' => [],
+                        'actions' => [],
+                    ],
+            ],
+            [ // 1 property and 1 action
+                'name' => 'thingName',
+                'brand' => 'thingBrand',
+                'links' =>
+                    [
+                        'properties' =>
+                            [
+                                [
+                                    'action_name1' => 'property_value1',
+                                ]
                             ],
-                        ],
-                    ],
-                'nullName' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => null,
-                            'links' => [
-                                'actions' => 'actionsValue',
-                                'properties' => 'propertiesValue',
+                        'actions' =>
+                            [
+                                'action_name1',
                             ],
-                        ],
                     ],
-                'nullLinks' =>
+            ],
+            [ // 2 properties and 2 actions
+                'name' => 'thingName',
+                'brand' => 'thingBrand',
+                'links' =>
                     [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameVale',
-                            'links' => null,
-                        ],
-                    ],
-                'emptyBrand' =>
-                    [
-                        [
-                            'brand' => '',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'actions' => 'actionsValue',
-                                'properties' => 'propertiesValue',
+                        'properties' =>
+                            [
+                                [
+                                    'action_name1' => 'property_value1',
+                                    'action_name2' => 'property_value2',
+                                ]
                             ],
-                        ],
-                    ],
-                'emptyName' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => '   ',
-                            'links' => [
-                                'actions' => 'actionsValue',
-                                'properties' => 'propertiesValue',
+                        'actions' =>
+                            [
+                                'action_name1',
+                                'action_name2',
                             ],
-                        ],
                     ],
-                'emptyLinks' =>
+            ],
+            [ // 2 properties and 2 actions && extra keys
+                'name' => 'thingName',
+                'brand' => 'thingBrand',
+                'extrakey' => 'extrakeyValue',
+                'links' =>
                     [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [],
-                        ],
-                    ],
-                'notArrayLinks' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => 'notArrayLinks',
-                        ],
-                    ],
-                'notExistingLinks_Actions' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'properties' => 'propertiesValue',
+                        'properties' =>
+                            [
+                                [
+                                    'action_name1' => 'property_value1',
+                                    'action_name2' => 'property_value2',
+                                ]
                             ],
-                        ],
-                    ],
-                'notExistingLinks_Properties' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'actions' => 'ActionsValue',
+                        'actions' =>
+                            [
+                                'action_name1',
+                                'action_name2',
                             ],
-                        ],
                     ],
-                'nullLinks_Actions' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'actions' => null,
-                                'properties' => 'propertiesValue',
-                            ],
-                        ],
-                    ],
-                'nullLinks_Properties' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'actions' => 'actionsValue',
-                                'properties' => null,
-                            ],
-                        ],
-                    ],
-                'emptyLinks_Actions' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'actions' => ' ',
-                                'properties' => 'propertiesValue',
-                            ],
-                        ],
-                    ],
-                'emptyLinks_Properties' =>
-                    [
-                        [
-                            'brand' => 'brandValue',
-                            'name' => 'nameValue',
-                            'links' => [
-                                'actions' => 'actionsValue',
-                                'properties' => ' ',
-                            ],
-                        ],
-                    ],
-            ];
+            ]
+        ];
+    }
+    public function myArrayOfInvalidThingAsArrayProvider(){
+        return [
+            [], // emtpy array
+            [   // only brand
+                'brand' => 'brandValue',
+            ],
+            [   // only name
+                'name' => 'nameValue',
+            ],
+            [ // links is not an array
+                'brand' => 'brandValue',
+                'name' => 'nameValue',
+                'links' => '',
+            ],
+            [ // links is an empty array
+                'brand' => 'brandValue',
+                'name' => 'nameValue',
+                'links' => [],
+            ],
+            [ // links['properties] is not an array
+                'brand' => 'brandValue',
+                'name' => 'nameValue',
+                'links' => [
+                    'properties' => '',
+                ],
+            ],
+            [ // links['action] is not an array
+                'brand' => 'brandValue',
+                'name' => 'nameValue',
+                'links' => [
+                    'properties' => [],
+                    'actions' => '',
+                ],
+            ],
+            [ // Brand is null
+                'brand' => null,
+                'name' => 'nameValue',
+                'links' => [
+                    'properties' => [],
+                    'actions' => [],
+                ],
+            ],
+            [ // Brand is empty
+                'brand' => '    ',
+                'name' => 'nameValue',
+                'links' => [
+                    'properties' => [],
+                    'actions' => [],
+                ],
+            ],
+            [ // Name is null
+                'brand' => 'brandValue',
+                'name' => null,
+                'links' => [
+                    'properties' => [],
+                    'actions' => [],
+                ],
+            ],
+            [ // Name is empty
+                'brand' => 'brandValue',
+                'name' => '    ',
+                'links' => [
+                    'properties' => [],
+                    'actions' => [],
+                ],
+            ]
+        ];
     }
 }
