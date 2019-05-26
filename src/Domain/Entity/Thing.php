@@ -192,7 +192,7 @@ class Thing
     }
 
 
-    public static function hasActionsAndPropertiesConcordance(array $actions, array $properties): bool
+    public static function hasActionsAndPropertiesConcordance(array $properties, array $actions): bool
     {
 
         if (count($actions) !== count($properties)) {
@@ -215,7 +215,7 @@ class Thing
             throw new \Exception('missing data for Thing creation');
         }
 
-        if (!Thing::hasActionsAndPropertiesConcordance($array['links']['actions'], $array['links']['properties'])) {
+        if (!Thing::hasActionsAndPropertiesConcordance($array['links']['properties'], $array['links']['actions'])) {
             throw new \Exception("No concordance for Actions and Properties");
         }
 
