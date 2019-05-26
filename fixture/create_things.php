@@ -14,6 +14,7 @@ function sendCurl($createThingPayload){
 //    var_dump($createThingPayload);
 
     $dataString = json_encode($createThingPayload);
+    print_r($dataString);
 
     $ch = curl_init(ENDPOINT);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");

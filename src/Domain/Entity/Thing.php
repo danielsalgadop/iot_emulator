@@ -60,8 +60,10 @@ class Thing
     }
 
 
+    // TODO: avoid multiple returns
     public static function isIntegrityValidOnCreate(array $data): bool
     {
+//        $validLinks = self::isValidLinks($data['links']);
         if(is_array($data['links']) && self::isValidLinks($data['links']) && isset($data['brand']) && isset($data['name'])
             ){
                 $trimmedBrand = trim($data['brand']);
@@ -75,16 +77,44 @@ class Thing
         return false;
     }
 
-    private static function isValidLinks(array $links): bool
+
+    public static function isValidProperties(array $properties): bool
     {
-        if(isset($links['actions']) && isset($links['properties'])){
+        if($properties === []){
+            return true;
+        }
+        foreach ($properties as $propertyNameAndValue){
 
-            $trimmedActions = trim($links['actions']);
-            $trimmedProperties = trim($links['properties']);
+            foreach ($propertyNameAndValue as $propertyName => $propertyValue){
+                if(trim($propertyName) === '' || trim($propertyValue) === ''){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
-            if($trimmedActions === '' || $trimmedProperties === ''){
+    public static function isValidActions(array $actions)
+    {
+        if($actions === []){
+            return true;
+        }
+        foreach ($actions as  $actionValue){
+            if(trim($actionValue) === ''){
                 return false;
             }
+        }
+        return true;
+    }
+    public static function isValidLinks(array $links): bool
+    {
+        // actions and properties are mandatory
+        if(!isset($links['actions']) && !isset($links['properties'])) {
+            return false;
+        }
+        $validProperties = self::isValidProperties($links['properties']);
+        $validActions = self::isValidActions($links['actions']);
+        if($validProperties && $validActions) {
             return true;
         }
         return false;
@@ -172,7 +202,6 @@ class Thing
 
     public static function createThingFromArray(array $array, UserCredentialsDTO $UserCredentialsDTO): Thing
     {
-
         // validate
         if (!Thing::isIntegrityValidOnCreate($array)) {
             throw new \Exception('missing data for Thing creation');

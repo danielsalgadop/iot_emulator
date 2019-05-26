@@ -93,6 +93,8 @@ class ThingController extends Controller
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
+//            var_dump(__METHOD__.' '.__LINE__);exit;
+//            var_dump($array);
             $createThingCommandHandler = $this->get('app.command_handler.create_thing');
             $command = new CreateThingCommand($array, $UserCredentialsDTO);
             $thing = $createThingCommandHandler->handle($command);
