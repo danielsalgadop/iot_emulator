@@ -63,6 +63,10 @@ class Thing
     // TODO: avoid multiple returns
     public static function isIntegrityValidOnCreate(array $data): bool
     {
+        if(!array_key_exists('links',$data)){
+            return false;
+        }
+
 //        $validLinks = self::isValidLinks($data['links']);
         if(is_array($data['links']) && self::isValidLinks($data['links']) && isset($data['brand']) && isset($data['name'])
             ){
@@ -106,15 +110,19 @@ class Thing
         }
         return true;
     }
+
+    // TODO refactor (use isIntegrityValidOnCreate test)
     public static function isValidLinks(array $links): bool
     {
-        // actions and properties are mandatory
-        if(!isset($links['actions']) && !isset($links['properties'])) {
+        // actions and properties are mandatory. And must be arrays
+        if(!array_key_exists('properties', $links) || !array_key_exists('actions', $links)){
             return false;
         }
-        $validProperties = self::isValidProperties($links['properties']);
-        $validActions = self::isValidActions($links['actions']);
-        if($validProperties && $validActions) {
+        if(!is_array($links['properties']) || !is_array($links['actions'])){
+            return false;
+        }
+
+        if(self::isValidProperties($links['properties']) && self::isValidActions($links['actions'])) {
             return true;
         }
         return false;
