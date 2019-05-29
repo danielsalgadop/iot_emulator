@@ -30,9 +30,8 @@ use App\Infrastructure\MySQLThingRepository;
 
 //use Doctrine\ORM\EntityManager;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+
 //$registry = new Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
-
 
 
 class ThingController extends Controller
@@ -43,7 +42,7 @@ class ThingController extends Controller
         $thingRepository = $this->get('app.repository.thing');
         $array_ids = $thingRepository->getAllIdOThings();
         $array_things = [];
-        foreach($array_ids as $id_thing){
+        foreach ($array_ids as $id_thing) {
 //            $thing = $thingRepository->searchThingByIdOrException($id_thing);
             $thing = $thingRepository->findThingById($id_thing);  // TODO: creo que esto esta obsoleto, cambiar por searchThingByIdOrException
             $array_things[] = Thing::publicInfoAsObject($thing);
@@ -53,7 +52,7 @@ class ThingController extends Controller
 
     public function getThing(int $id, Request $request): JsonResponse
     {
-        try{
+        try {
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
@@ -64,12 +63,12 @@ class ThingController extends Controller
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
 //        $obj = Thing::privateInfoAsObject($thing);
-        return new JsonResponse(ThingWithCredentials::asObject($thing),201);
+        return new JsonResponse(ThingWithCredentials::asObject($thing), 201);
     }
 
     public function delete(int $id, Request $request): JsonResponse
     {
-        try{
+        try {
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
@@ -83,7 +82,7 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-        return new JsonResponse('',204);
+        return new JsonResponse('', 204);
     }
 
     public function create(Request $request)
@@ -93,7 +92,6 @@ class ThingController extends Controller
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
-//            var_dump(__METHOD__.' '.__LINE__);exit;
 //            var_dump($array);
             $createThingCommandHandler = $this->get('app.command_handler.create_thing');
             $command = new CreateThingCommand($array, $UserCredentialsDTO);
@@ -106,13 +104,13 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-        return new Response("ddbb updated - thing created with this id " . $thing->getId(),201);
+        return new Response("ddbb updated - thing created with this id " . $thing->getId(), 201);
     }
 
-    public function executeAction($id,$action_name,Request $request)
+    public function executeAction($id, $action_name, Request $request)
     {
 
-        try{
+        try {
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
             $thing = $this->getThingByThingIdOrException($id, $UserCredentialsDTO);
@@ -128,7 +126,7 @@ class ThingController extends Controller
 
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
-        return new JsonResponse("updated property for id ".$thing->getId(), 204);
+        return new JsonResponse("updated property for id " . $thing->getId(), 204);
 
         /*
         $objData = json_decode($request->getContent());
@@ -139,6 +137,7 @@ class ThingController extends Controller
         return new JsonResponse("ruta ok $id $action_name");
         */
     }
+
     public function getActionsByThingId($id, Request $request)
     {
         try {
@@ -146,7 +145,7 @@ class ThingController extends Controller
             $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
-            $command = new SearchThingByIdCommand($id,$UserCredentialsDTO);
+            $command = new SearchThingByIdCommand($id, $UserCredentialsDTO);
             $thing = $searchThingByIdCommandHandler->handle($command);
 
 
@@ -155,8 +154,8 @@ class ThingController extends Controller
                 // TODO better json {} creation- https://stackoverflow.com/questions/3281354/create-json-object-the-correct-way
 
                 $objAction = new \stdClass();
-                $objAction->id= $action->getId();
-                $objAction->name= $action->getName();
+                $objAction->id = $action->getId();
+                $objAction->name = $action->getName();
                 $array_actions[] = $objAction;
             }
         } catch (\Exception $e) {
@@ -167,22 +166,22 @@ class ThingController extends Controller
         return new JsonResponse($array_actions);
     }
 
-    public function getValueOfProperty($id,$property_name, Request $request)
+    public function getValueOfProperty($id, $property_name, Request $request)
     {
         # we assume property name === action name (in fact, there is NO property_name)
 
-        try{
+        try {
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
-            $thing = $this->getThingByThingIdOrException($id,$UserCredentialsDTO);
+            $thing = $this->getThingByThingIdOrException($id, $UserCredentialsDTO);
             $actions = $thing->getActions();
             foreach ($actions as $action) {
-                if($action->getName() === $property_name){
+                if ($action->getName() === $property_name) {
                     $property = $action->getProperty();
                     return new JsonResponse($property->asArray());
                 }
             }
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         return new JsonResponse(['error' => "unknown Property"], 500);
@@ -190,10 +189,11 @@ class ThingController extends Controller
 
     // TODO use it in this file where 'app.command_handler.search_thing_by_id' is being used
     // DUDA, esto es "sospechosamente" MUY parecido a thingRepository->searchThingByIdOrException($id)
-    private function getThingByThingIdOrException($id, UserCredentialsDTO $UserCredentialsDTO){
+    private function getThingByThingIdOrException($id, UserCredentialsDTO $UserCredentialsDTO)
+    {
 
         $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
-        $command = new SearchThingByIdCommand($id,$UserCredentialsDTO);
+        $command = new SearchThingByIdCommand($id, $UserCredentialsDTO);
         return $searchThingByIdCommandHandler->handle($command);
     }
 
@@ -203,15 +203,14 @@ class ThingController extends Controller
     {
         $user = $request->headers->get('user');
         $password = $request->headers->get('password');
-        if(!isset($user) || !isset($password)){
+        if (!isset($user) || !isset($password)) {
             throw new Exception("Invalid Request: cant find mandatory http-headers, user and password");
         }
     }
 
-
     private function decodeJsonToArrayOrException($json)
     {
-        $array = json_decode($json,true);
+        $array = json_decode($json, true);
 
         if ($array === null && json_last_error() !== JSON_ERROR_NONE) {
             throw new \Exception("Bad Json");
