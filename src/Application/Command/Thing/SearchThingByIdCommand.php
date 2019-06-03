@@ -11,7 +11,7 @@ class SearchThingByIdCommand
     public function __construct(int $id, UserCredentialsDTO $userCredentialsDTO)
     {
         $this->id = $id;
-        $this->UserCredentialsDTO = $userCredentialsDTO;
+        $this->userCredentialsDTO = $userCredentialsDTO;
     }
 
     public function getId()

@@ -16,4 +16,9 @@ class ThingWithCredentials
         $obj->links = ThingActions::asObject($thing);
         return $obj;
     }
+    public static function asJson(Thing $thing)
+    {
+        return json_encode(self::asObject($thing));
+    }
+
 }
