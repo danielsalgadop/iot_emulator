@@ -224,7 +224,7 @@ class Thing
             $action = new Action();
             $property = new Property();
 
-            $property->setValue($array['links']['properties'][$i][$array['links']['actions'][$i]]); // madre mia, muy enrevesado!
+            $property->setValue($array['links']['properties'][$i][$array['links']['actions'][$i]]);
             $action->setProperty($property);
             $action->setName($array['links']['actions'][$i]);
             $actionCollector[] = $action;
