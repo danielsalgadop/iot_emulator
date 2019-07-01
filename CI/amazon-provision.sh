@@ -17,5 +17,6 @@ cd /var/www/iot_emulator; composer install; php bin/console doctrine:database:cr
 
 
 sudo cp /var/www/iot_emulator/CI/nginx_conf/prod/iot /etc/nginx/sites-available/
+sudo rm /etc/nginx/sites-enabled/default
 
 sudo ln -s /etc/nginx/sites-available/iot /etc/nginx/sites-enabled/
