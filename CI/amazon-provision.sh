@@ -14,3 +14,8 @@ mysql -D mysql -e "CREATE USER 'iot'@'localhost' IDENTIFIED BY 'iot'; GRANT ALL 
 
 cd /var/www/iot_emulator; composer install; php bin/console doctrine:database:create; php bin/console doctrine:schema:create;
 
+
+
+sudo cp /var/www/iot_emulator/CI/nginx_conf/prod/iot /etc/nginx/sites-available/
+
+sudo ln -s /etc/nginx/sites-available/iot /etc/nginx/sites-enabled/
