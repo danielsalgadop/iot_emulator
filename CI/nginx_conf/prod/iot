@@ -11,6 +11,9 @@ server {
 #
         root /var/www/iot_emulator/public;
         index index.php;
+
+	error_log /var/log/nginx/iot.socialaccesscontroller_error.tk debug
+	access_log /var/log/nginx/iot.socialaccesscontroller_access
 #
 #       location / {
 #               try_files $uri $uri/ =404;

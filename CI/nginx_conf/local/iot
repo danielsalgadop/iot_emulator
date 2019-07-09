@@ -7,7 +7,7 @@ server {
         listen 80;
         listen [::]:80;
 #
-        server_name local.iotemulator.tk;
+        server_name local.iot.socialacesscontroller.tk;
 #
         root /var/www/iot_emulator/public;
         index index.php;
