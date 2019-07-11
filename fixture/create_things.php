@@ -1,7 +1,7 @@
 <?php
 error_reporting(-1);
 
-define('ENDPOINT','http://localhost/create');
+define('ENDPOINT','http://iot.socialaccesscontroller.tk/create');
 define('ACTION_PREFIX','action_name');
 define('PROPERTY_PREFIX','property_value');
 
