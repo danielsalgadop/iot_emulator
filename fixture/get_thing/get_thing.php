@@ -2,7 +2,7 @@
 //error_reporting(E_STRICT);
 error_reporting(-1);
 
-define('ENDPOINT','http://localhost');
+define('ENDPOINT','http://iot.socialaccesscontroller.tk');
 define('ACTION_PREFIX','action_name');
 
 if(!isset($argv[1])){
