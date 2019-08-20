@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 ssh -i "socialaccesscontroller-paris.pem" ubuntu@ec2-35-180-120-192.eu-west-3.compute.amazonaws.com
 
-ssh -i ~/dev/socialaccesscontroller-paris.pem ubuntu@ec2-35-180-120-192.eu-west-3.compute.amazonaws.com sudo apt-get update; sudo apt-get install mysql-server apache2 php php-mysql php7.2-xml npm libapache2-mod-php php-curl composer -y;
+ssh -i ~/dev/socialaccesscontroller-paris.pem ubuntu@ec2-35-180-120-192.eu-west-3.compute.amazonaws.com sudo apt-get update; sudo apt-get install mysql-server nginx php php-mysql php7.2-xml  php-curl composer -y;
 
 
 sudo cp /etc/mysql/debian.cnf /home/ubuntu/.my.cnf; sudo chown ubuntu:ubuntu /home/ubuntu/.my.cnf
