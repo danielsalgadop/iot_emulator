@@ -52,13 +52,11 @@ class Property
     public function setIdAction(Action $idAction): self
     {
         $this->idAction = $idAction;
-
         return $this;
     }
 
     public function asArray()
     {
-        # actually property have only 1 value;
         $class = new \stdClass();
         $class->value = $this->getValue();
         return [
