@@ -75,9 +75,10 @@ class User
 
         return $this;
     }
-    public function correctCredentialsOrException(string $name, string $password):bool
+
+    public function correctCredentialsOrException(string $name, string $password): bool
     {
-        if($this->name === $name && $this->password === $password){
+        if ($this->name === $name && $this->password === $password) {
             return true;
         }
         throw new Exception("Invalid Credentials");

@@ -55,7 +55,9 @@ class Property
 
         return $this;
     }
-    public function asArray(){
+
+    public function asArray()
+    {
         # actually property have only 1 value;
         $class = new \stdClass();
         $class->value = $this->getValue();

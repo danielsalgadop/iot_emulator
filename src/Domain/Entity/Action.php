@@ -74,8 +74,8 @@ class Action
 
         // set the owning side of the relation if necessary
         if ($this !== $property->getIdAction()) {
-                $property->setIdAction($this);
-            }
+            $property->setIdAction($this);
+        }
 
         return $this;
     }

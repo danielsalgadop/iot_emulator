@@ -63,20 +63,20 @@ class Thing
     // TODO: avoid multiple returns
     public static function isIntegrityValidOnCreate(array $data): bool
     {
-        if(!array_key_exists('links',$data)){
+        if (!array_key_exists('links', $data)) {
             return false;
         }
 
 //        $validLinks = self::isValidLinks($data['links']);
-        if(is_array($data['links']) && self::isValidLinks($data['links']) && isset($data['brand']) && isset($data['name'])
-            ){
-                $trimmedBrand = trim($data['brand']);
-                $trimmedName = trim($data['name']);
+        if (is_array($data['links']) && self::isValidLinks($data['links']) && isset($data['brand']) && isset($data['name'])
+        ) {
+            $trimmedBrand = trim($data['brand']);
+            $trimmedName = trim($data['name']);
 
-                if($trimmedBrand === '' || $trimmedName === '' ){
-                    return false;
-                }
-                return true;
+            if ($trimmedBrand === '' || $trimmedName === '') {
+                return false;
+            }
+            return true;
         }
         return false;
     }
@@ -84,13 +84,13 @@ class Thing
 
     public static function isValidProperties(array $properties): bool
     {
-        if($properties === []){
+        if ($properties === []) {
             return true;
         }
-        foreach ($properties as $propertyNameAndValue){
+        foreach ($properties as $propertyNameAndValue) {
 
-            foreach ($propertyNameAndValue as $propertyName => $propertyValue){
-                if(trim($propertyName) === '' || trim($propertyValue) === ''){
+            foreach ($propertyNameAndValue as $propertyName => $propertyValue) {
+                if (trim($propertyName) === '' || trim($propertyValue) === '') {
                     return false;
                 }
             }
@@ -100,11 +100,11 @@ class Thing
 
     public static function isValidActions(array $actions)
     {
-        if($actions === []){
+        if ($actions === []) {
             return true;
         }
-        foreach ($actions as  $actionValue){
-            if(trim($actionValue) === ''){
+        foreach ($actions as $actionValue) {
+            if (trim($actionValue) === '') {
                 return false;
             }
         }
@@ -115,14 +115,14 @@ class Thing
     public static function isValidLinks(array $links): bool
     {
         // actions and properties are mandatory. And must be arrays
-        if(!array_key_exists('properties', $links) || !array_key_exists('actions', $links)){
+        if (!array_key_exists('properties', $links) || !array_key_exists('actions', $links)) {
             return false;
         }
-        if(!is_array($links['properties']) || !is_array($links['actions'])){
+        if (!is_array($links['properties']) || !is_array($links['actions'])) {
             return false;
         }
 
-        if(self::isValidProperties($links['properties']) && self::isValidActions($links['actions'])) {
+        if (self::isValidProperties($links['properties']) && self::isValidActions($links['actions'])) {
             return true;
         }
         return false;
