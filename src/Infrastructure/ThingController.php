@@ -4,32 +4,28 @@
 namespace App\Infrastructure;
 
 //use http\Env\Response;
-use App\Application\Command\Thing\GetActionsByThingIdCommand;
+use App\Application\Command\Thing\CreateThingCommand;
 use App\Application\Command\Thing\ExecuteActionCommand;
-use App\Application\CommandHandler\Thing\CreateThingHandler;
+use App\Application\Command\Thing\GetActionsByThingIdCommand;
+use App\Application\Command\Thing\SearchThingByIdCommand;
 use App\Application\Dto\UserCredentialsDTO;
 use App\Domain\Entity\Thing;
-use App\Domain\Entity\Action;
-use App\Domain\Repository\ThingRepository;
 use App\Infrastructure\Thing\Serializer\ThingWithCredentials;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Application\Command\Thing\CreateThingCommand;
-use App\Application\Command\Thing\SearchThingByIdCommand;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+//use Symfony\Component\HttpFoundation\Request;
 //use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
-use App\Infrastructure\MySQLThingRepository;
 //use Symfony\Component\Routing\Annotation\Route;
 
 //use Doctrine\ORM\EntityManager;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 //$registry = new Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -72,8 +68,6 @@ class ThingController extends Controller
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
 
-
-            // TODO use getThingByThingIdOrException
             $thingRepository = $this->get('app.repository.thing');
             $thing = $this->getThingByThingIdOrException($id, $UserCredentialsDTO);
             $thingRepository->remove($thing);
@@ -87,7 +81,7 @@ class ThingController extends Controller
 
     public function create(Request $request)
     {
-        try{
+        try {
             $array = $this->decodeJsonToArrayOrException($request->getContent());
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
