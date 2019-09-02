@@ -42,7 +42,7 @@ class MySQLThingRepository implements ThingRepository
 
         $thing = $this->em->find(Thing::class, $id);
         if($thing === null){
-            throw new \Exception("Non-existing THING id [".$id."]");
+            throw new \Exception("Non-existing THING with endpoint [".$id."]");
         }
         return $thing;
 //        return $things->getId();
