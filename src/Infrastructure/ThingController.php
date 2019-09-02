@@ -60,7 +60,7 @@ class ThingController extends Controller
             // find Thing
         } catch (\Exception $e) {
 
-            return new JsonResponse(['error' => $e->getMessage()], 500);
+            return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 //        $obj = Thing::privateInfoAsObject($thing);
         return new JsonResponse(ThingWithCredentials::asObject($thing), 201);
