@@ -1,9 +1,8 @@
-POST http://localhost:8001/create
+POST http://iot.socialaccesscontroller.tk/create
 Content-Type: application/json
 user: user
 password: password
 
-// my json
 {
   "name": "jsonName",
   "brand":"jsonBrand",

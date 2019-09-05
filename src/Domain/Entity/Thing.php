@@ -7,8 +7,6 @@ use App\Infrastructure\Thing\Serializer\ThingWithoutCredentials;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Domain\Entity\Action;
-use App\Domain\Entity\Property;
 use Symfony\Component\DependencyInjection\Tests\Fixtures\StdClassDecorator;
 
 //use App\Domain\Entity\BasicThing
@@ -39,7 +37,6 @@ class Thing
      * @ORM\OneToMany(targetEntity="App\Domain\Entity\Action", mappedBy="IdThing", orphanRemoval=true, cascade={"persist"})
      */
     private $actions;
-
 
     /**
      * @ORM\OneToOne(targetEntity="App\Domain\Entity\User", mappedBy="thing", cascade={"persist", "remove"})

@@ -1,0 +1,10 @@
+POST localhost:8001/1/actions/action_name1
+Content-Type: application/json
+user: user
+password: password
+
+
+{
+  "INCORRECT_action_name":"new_property_value"
+}
+
