@@ -5,14 +5,14 @@
 namespace App\Tests\Domain\Entity\Thing;
 
 
-use PHPUnit\Framework\TestCase;
 use App\Domain\Entity\Thing;
+use PHPUnit\Framework\TestCase;
 
 class isIntegrityValidOnCreate extends TestCase
 {
     public function testValidSerializedThingShouldReturnTrue()
     {
-        foreach ( $this->myArrayOfValidThingAsArrayProvider() as $validThingAsArray) {
+        foreach ($this->myArrayOfValidThingAsArrayProvider() as $validThingAsArray) {
             $this->assertTrue(Thing::isIntegrityValidOnCreate($validThingAsArray));
         }
     }
@@ -96,7 +96,9 @@ class isIntegrityValidOnCreate extends TestCase
             ]
         ];
     }
-    public function myArrayOfInvalidThingAsArrayProvider(){
+
+    public function myArrayOfInvalidThingAsArrayProvider()
+    {
         return [
             [], // emtpy array
             [   // only brand

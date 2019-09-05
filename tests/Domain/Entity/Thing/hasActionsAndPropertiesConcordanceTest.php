@@ -5,8 +5,8 @@
 namespace App\Tests\Domain\Entity\Thing;
 
 
-use PHPUnit\Framework\TestCase;
 use App\Domain\Entity\Thing;
+use PHPUnit\Framework\TestCase;
 
 class isIntegrityValidOnCreate extends TestCase
 {
@@ -17,7 +17,7 @@ class isIntegrityValidOnCreate extends TestCase
             $actions = $validPropertiesAndActions['actions'];
             $properties = $validPropertiesAndActions['properties'];
 
-            $this->assertTrue(Thing::hasActionsAndPropertiesConcordance($properties,$actions));
+            $this->assertTrue(Thing::hasActionsAndPropertiesConcordance($properties, $actions));
         }
     }
 
@@ -28,7 +28,7 @@ class isIntegrityValidOnCreate extends TestCase
             $actions = $InValidPropertiesAndActions['actions'];
             $properties = $InValidPropertiesAndActions['properties'];
 
-            $this->assertFalse(Thing::hasActionsAndPropertiesConcordance($properties,$actions));
+            $this->assertFalse(Thing::hasActionsAndPropertiesConcordance($properties, $actions));
         }
     }
 
