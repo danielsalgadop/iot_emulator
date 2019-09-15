@@ -1,4 +1,4 @@
-GET localhost:8001/4/properties/BADproperty
+GET {{IOT_EMULATOR}º}/4/properties/BADproperty
 user: user
 password: password
 

@@ -1,4 +1,4 @@
-GET localhost:8001/
+GET {{IOT_EMULATOR}}/
 
 ###
 

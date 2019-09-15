@@ -1,16 +1,16 @@
 # Virtual Host configuration for iot.socialaccesscontroller.tk
 #
 server {
-        listen 80;
-        listen [::]:80;
+    listen 80;
+    listen [::]:80;
 
-        server_name iot.socialaccesscontroller.tk;
+    server_name iot.socialaccesscontroller.tk;
 
-        root /var/www/iot_emulator/public;
-        index index.php;
+    root /var/www/iot_emulator/public;
+    index index.php;
 
-	error_log /var/log/nginx/iot.socialaccesscontroller_error.log debug
-	access_log /var/log/nginx/iot.socialaccesscontroller.access.log
+	error_log /var/log/nginx/iot.socialaccesscontroller_error.tk debug
+	access_log /var/log/nginx/iot.socialaccesscontroller_access
     
     location / {
         try_files $uri /index.php$is_args$args;
