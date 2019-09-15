@@ -1,4 +1,4 @@
-POST localhost:8001/1/actions/INCORRECT_action_name1
+POST {{IOT_EMULATOR}}/1/actions/INCORRECT_action_name1
 Content-Type: application/json
 user: user
 password: password
