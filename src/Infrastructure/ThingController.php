@@ -8,9 +8,13 @@ use App\Application\Command\Thing\CreateThingCommand;
 use App\Application\Command\Thing\ExecuteActionCommand;
 use App\Application\Command\Thing\GetActionsByThingIdCommand;
 use App\Application\Command\Thing\SearchThingByIdCommand;
+use App\Application\CommandHandler\Thing\SearchThingByIdHandler;
+use App\Application\CommandHandler\Thing\SearchThingByIdWithoutCredentialsHandler;
+use App\Application\Command\Thing\SearchThingByIdWithoutCredentialsCommand;
 use App\Application\Dto\UserCredentialsDTO;
 use App\Domain\Entity\Thing;
 use App\Infrastructure\Thing\Serializer\ThingWithCredentials;
+use App\Infrastructure\Thing\Serializer\ThingWithoutCredentials;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +37,15 @@ use Symfony\Component\HttpFoundation\Response;
 class ThingController extends Controller
 {
 
+    private $searchThingByIdHandler;
+    private $searchThingByIdWithoutCredentialsHandler;
+
+    public function __construct(SearchThingByIdHandler $searchThingByIdHandler, SearchThingByIdWithoutCredentialsHandler $searchThingByIdWithoutCredentialsHandler)
+    {
+        $this->searchThingByIdHandler = $searchThingByIdHandler;
+        $this->searchThingByIdWithoutCredentialsHandler = $searchThingByIdWithoutCredentialsHandler;
+    }
+
     public function index(): JsonResponse
     {
         $thingRepository = $this->get('app.repository.thing');
@@ -48,11 +61,28 @@ class ThingController extends Controller
 
     public function getThing(int $id, Request $request): JsonResponse
     {
+
+
+        try {
+//            return new JsonResponse("sddsf");
+            $thing = $this->$searchThingByIdWithoutCredentialsHandler->handle(new SearchThingByIdWithoutCredentialsCommand($id));
+            return new JsonResponse($thing);
+//            print $thing;
+        } catch (\Exception $e) {
+            return new JsonResponse(ThingWithoutCredentials::asObject($thing), 201);
+        }
         try {
             $this->requestHasUserAndPasswordOrException($request);
-            $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 400);
+        }
+        try {
+            $user = $thing->getUser();
+            $user->correctCredentialsOrException($request->headers->get('user'), $request->headers->get('password'));
+//            $userCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+            $thing = $this->searchThingByIdHandler->handle(new SearchThingByIdCommand($id, $userCredentialsDTO));
 
-            $thing = $this->getThingByThingIdOrException($id, $UserCredentialsDTO);
+//            $thing = $this->getThingByThingIdOrException($id, $userCredentialsDTO);
             // find Thing
         } catch (\Exception $e) {
 

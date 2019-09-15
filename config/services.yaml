@@ -49,3 +49,9 @@ services:
         public: true
         arguments:
         - "@app.repository.thing"
+
+    app.command_handler.search_thing_by_id_without_credentials:
+        class: App\Application\CommandHandler\Thing\SearchThingByIdWithoutCredentialsHandler
+        public: true
+        arguments:
+        - "@app.repository.thing"
