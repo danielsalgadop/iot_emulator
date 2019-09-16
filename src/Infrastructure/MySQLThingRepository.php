@@ -6,6 +6,7 @@ namespace App\Infrastructure;
 use App\Domain\Repository\ThingRepository;
 use App\Domain\Entity\Thing;
 use Doctrine\ORM\EntityManagerInterface;
+use \Exception;
 
 class MySQLThingRepository implements ThingRepository
 {
@@ -36,13 +37,15 @@ class MySQLThingRepository implements ThingRepository
     }
     public function searchThingByIdOrException(int $id): ?Thing
     {
+
 //        $things = $this->em
 //            ->getRepository(Thing::class)
 //            ->findBy(['id' => $id]);
 
         $thing = $this->em->find(Thing::class, $id);
         if($thing === null){
-            throw new \Exception("Non-existing THING with endpoint [".$id."]");
+
+            throw new Exception("Non-existing THING with endpoint [".$id."]");
         }
         return $thing;
 //        return $things->getId();

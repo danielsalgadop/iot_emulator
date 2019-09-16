@@ -20,10 +20,11 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Config\Definition\Exception\Exception;
+//use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 
 //use Symfony\Component\HttpFoundation\Request;
 //use App\Application\CommandHandler\Thing\CreateThingHandler; /* TODO add this as service */
@@ -64,29 +65,28 @@ class ThingController extends Controller
 
 
         try {
-//            return new JsonResponse("sddsf");
-            $thing = $this->$searchThingByIdWithoutCredentialsHandler->handle(new SearchThingByIdWithoutCredentialsCommand($id));
-            return new JsonResponse($thing);
-//            print $thing;
+            $thing = $this->searchThingByIdWithoutCredentialsHandler->handle(new SearchThingByIdWithoutCredentialsCommand($id));
         } catch (\Exception $e) {
-            return new JsonResponse(ThingWithoutCredentials::asObject($thing), 201);
+            return new JsonResponse(['error' => $e->getMessage()], 400);
         }
         try {
             $this->requestHasUserAndPasswordOrException($request);
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => $e->getMessage()], 400);
+        } catch (Exception $e) {
+            return new JsonResponse(ThingWithoutCredentials::asObject($thing), 201);
+//            return new JsonResponse(['error' => $e->getMessage()], 400);
         }
         try {
             $user = $thing->getUser();
             $user->correctCredentialsOrException($request->headers->get('user'), $request->headers->get('password'));
-//            $userCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
+            $userCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
             $thing = $this->searchThingByIdHandler->handle(new SearchThingByIdCommand($id, $userCredentialsDTO));
 
 //            $thing = $this->getThingByThingIdOrException($id, $userCredentialsDTO);
             // find Thing
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            return new JsonResponse(ThingWithoutCredentials::asObject($thing), 201);
 
-            return new JsonResponse(['error' => $e->getMessage()], 400);
+//            return new JsonResponse(['error' => $e->getMessage()], 400);
         }
 //        $obj = Thing::privateInfoAsObject($thing);
         return new JsonResponse(ThingWithCredentials::asObject($thing), 201);
