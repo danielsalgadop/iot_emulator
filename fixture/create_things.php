@@ -1,7 +1,8 @@
 <?php
 error_reporting(-1);
 
-define('ENDPOINT','http://iot.socialaccesscontroller.tk/create');
+define('ENDPOINT',getenv("IOT_EMULATOR").'/create');
+define('PORT',8000);
 define('ACTION_PREFIX','action_name');
 define('PROPERTY_PREFIX','property_value');
 
@@ -19,7 +20,7 @@ function sendCurl($createThingPayload){
     $ch = curl_init(ENDPOINT);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-    curl_setopt($ch, CURLOPT_PORT , 80);
+    curl_setopt($ch, CURLOPT_PORT , PORT);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
