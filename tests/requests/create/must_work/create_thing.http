@@ -1,4 +1,6 @@
-POST http://iot.socialaccesscontroller.tk/create
+# http POST ${IOT_EMULATOR}/create user:user password:password <<< '{ "name": "jsonName", "brand":"jsonBrand", "links": { "properties":[ {"action_name1":"property_value1"}, {"action_name2":"property_value2"} ], "actions":["action_name1","action_name2"] } }'
+
+POST {{IOT_EMULATOR}}/create
 Content-Type: application/json
 user: user
 password: password
@@ -16,41 +18,4 @@ password: password
   }
 }
 
-// Basic JSON payload (w3 web thing model). I understand this is a REsponse
-//{
-//  "id": "myCar",
-//  "name": "My great car",
-//  "description": "This is such a great car.",
-//  "createdAt": "2012-08-24T17:29:11.683Z",
-//  "updatedAt": "2012-08-24T17:29:11.683Z",
-//  "tags": [
-//    "cart",
-//    "device",
-//    "test"
-//  ],
-//  "customFields": {
-//    "size": "20",
-//    "color": "blue"
-//  },
-//  "links": {
-//    "model": {
-//      "link": "model/",
-//      "title": "Model this Web Thing."
-//    },
-//    "properties": {
-//      "link": "properties/",
-//      "title": "Properties of this Web Thing."
-//    },
-//    "actions": {
-//      "link": "actions/",
-//      "title": "Actions of this Web Thing."
-//    }
-//  }
-//}
-### For httpie:
-// Basic JSON payload (w3 web thing model). I undesstand this is a REsponse
-http POST {{IOT_EMULATOR}}/create user:user password:password <<< '{ "id": "myCar", "name": "My great car", "description": "This is such a great car.", "createdAt": "2012-08-24T17:29:11.683Z", "updatedAt": "2012-08-24T17:29:11.683Z", "tags": [ "cart", "device", "test" ], "customFields": { "size": "20", "color": "blue" }, "links": { "model": { "link": "model/", "title": "Model this Web Thing." }, "properties": { "link": "properties/", "title": "Properties of this Web Thing." }, "actions": { "link": "actions/", "title": "Actions of this Web Thing." } } }'
-
-// my json
-
-http POST {{IOT_EMULATOR}}/create user:user password:password <<< '{ "name": "jsonName", "brand":"jsonBrand", "links": { "properties":[ {"action_name1":"property_value1"}, {"action_name2":"property_value2"} ], "actions":["action_name1","action_name2"] } }'
+###
