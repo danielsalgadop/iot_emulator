@@ -2,7 +2,8 @@
 //error_reporting(E_STRICT);
 
 error_reporting(-1);
-define('ENDPOINT','http://iot.socialaccesscontroller.tk');
+define('ENDPOINT',getenv("IOT_EMULATOR"));
+define('PORT',getenv("IOT_EMULATOR_PORT"));
 define('ACTION_PREFIX','action_name');
 
 if(!isset($argv[1])){
@@ -17,7 +18,7 @@ function sendCurl($id){
 
     $ch = curl_init(ENDPOINT.'/'.$id.'/actions');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-    curl_setopt($ch, CURLOPT_PORT , 8001);
+    curl_setopt($ch, CURLOPT_PORT , PORT);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'user: user',

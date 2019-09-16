@@ -2,7 +2,8 @@
 error_reporting(-1);
 
 define('ENDPOINT',getenv("IOT_EMULATOR").'/create');
-define('PORT',8000);
+define('PORT',getenv("IOT_EMULATOR_PORT"));
+//define('PORT',8000);
 define('ACTION_PREFIX','action_name');
 define('PROPERTY_PREFIX','property_value');
 
