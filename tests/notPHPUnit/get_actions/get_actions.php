@@ -36,14 +36,14 @@ function sendCurl($id){
 
 
 
-$json_result_as_array = json_decode(sendCurl($id),true);
+$jsonResultAsArray = json_decode(sendCurl($id),true);
 
-$expected_output = expectedOutput($id);
-//var_dump($expected_output);
-//var_dump($json_result_as_array);
+$expectedOutput = expectedOutput($id);
+//var_dump($expectedOutput);
+//var_dump($jsonResultAsArray);
 
 
-if($json_result_as_array !== $expected_output){
+if($jsonResultAsArray !== $expectedOutput){
     print 'ERROR!'.PHP_EOL;
 }
 else{
@@ -52,16 +52,16 @@ else{
 
 function expectedOutput($id){
     // building action
-    $expected_action_id = expectedActionIdStartingPoint($id);
-    $expected_data_structure=[];
+    $expectedActionId = expectedActionIdStartingPoint($id);
+    $expectedDataStructure=[];
     for($i=0;$i<$id;$i++){
 
-        $action_incremental = $i+1;
-        $expected_data_structure[$i]['id'] = (int) $expected_action_id;
-        $expected_data_structure[$i]['name'] = ACTION_PREFIX.$action_incremental;
-        $expected_action_id++;
+        $actionIncremental = $i+1;
+        $expectedDataStructure[$i]['id'] = (int) $expectedActionId;
+        $expectedDataStructure[$i]['name'] = ACTION_PREFIX.$actionIncremental;
+        $expectedActionId++;
     }
-    return $expected_data_structure;
+    return $expectedDataStructure;
 }
 
 function expectedActionIdStartingPoint($id){

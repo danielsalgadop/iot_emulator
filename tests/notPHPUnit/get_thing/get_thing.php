@@ -1,6 +1,10 @@
 <?php
 //error_reporting(E_STRICT);
 error_reporting(-1);
+ini_set("xdebug.var_display_max_children", -1);
+ini_set("xdebug.var_display_max_data", -1);
+ini_set("xdebug.var_display_max_depth", -1);
+
 define('ENDPOINT', getenv("IOT_EMULATOR"));
 define('PORT', getenv("IOT_EMULATOR_PORT"));
 define('ACTION_PREFIX', 'action_name');
@@ -28,20 +32,20 @@ function sendCurl($id)
 
 
     $result = curl_exec($ch);
-    file_put_contents("/tmp/get_actions." . $time . ".html", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export($result, true) . PHP_EOL, FILE_APPEND);
+//    file_put_contents("/tmp/get_actions." . $time . ".html", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export($result, true) . PHP_EOL, FILE_APPEND);
     var_dump($result);
     return $result;
 }
 
 
-$json_result_as_array = json_decode(sendCurl($id), true);
+$jsonResultAsArray = json_decode(sendCurl($id), true);
 
-$expected_output = expectedOutput($id);
+$expectedOutput = expectedOutput($id);
 
 
-if ($json_result_as_array !== $expected_output) {
-    var_dump($expected_output);
-    var_dump($json_result_as_array);
+if ($jsonResultAsArray !== $expectedOutput) {
+    var_dump($expectedOutput);
+    var_dump($jsonResultAsArray);
 
     print 'ERROR!' . PHP_EOL;
 } else {
@@ -51,26 +55,15 @@ if ($json_result_as_array !== $expected_output) {
 function expectedOutput($id)
 {
     // building action
-    $expected_action_id = expectedActionIdStartingPoint($id);
-    $expected_data_structure = [];
-    $expected_data_structure['name'] = "thing_name" . $id;
-    $expected_data_structure['brand'] = "thing_brand" . $id;
-    $expected_data_structure['links']['actions']['link'] = '/actions';
+    $expectedDataStructure = [];
+    $expectedDataStructure['id'] = (int) $id;
+    $expectedDataStructure['name'] = "thing_name" . $id;
+    $expectedDataStructure['brand'] = "thing_brand" . $id;
+    $expectedDataStructure['links']['actions']['link'] = '/actions';
     for ($i = 0; $i < $id; $i++) {
-//        $expected_data_structure['links']['actions']['link']['resoures']['action_name'.$i]['values'] = 'property_value'.$i;
-//        $expected_data_structure['links']['actions']['link']['resoures']['action_name']['values'] = 'property_value'.$i;
-        $expected_data_structure['links']['actions']['link'] = 'property_value'.$i;
-//        $action_incremental = $i + 1;
-//        $expected_data_structure[$i]['name'] = ACTION_PREFIX . $action_incremental;
-//        $expected_action_id++;
+        $actionId = $i + 1;
+        $expectedDataStructure['links']['actions']['resources']['action_name'.$actionId]['values'] = 'property_value'.$actionId;
     }
-    return $expected_data_structure;
+    return $expectedDataStructure;
 }
 
-function expectedActionIdStartingPoint($id)
-{
-    $id--;
-    $number = (($id * $id) + $id) / 2;
-    $number++;
-    return $number;
-}
