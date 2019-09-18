@@ -21,7 +21,6 @@ class MySQLThingRepository implements ThingRepository
     {
         try {
             $this->em->persist($thing);
-//            $this->em->flush();
         } catch (Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -30,7 +29,6 @@ class MySQLThingRepository implements ThingRepository
     {
         try {
             $this->em->remove($thing);
-//            $this->em->flush();
         } catch (Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -38,24 +36,14 @@ class MySQLThingRepository implements ThingRepository
     public function searchThingByIdOrException(int $id): ?Thing
     {
 
-//        $things = $this->em
-//            ->getRepository(Thing::class)
-//            ->findBy(['id' => $id]);
-
         $thing = $this->em->find(Thing::class, $id);
         if($thing === null){
 
             throw new Exception("Non-existing THING with endpoint [".$id."]");
         }
         return $thing;
-//        return $things->getId();
-
-//        if (count($things) === 0) {
-//            throw new \Exception("Uknknown id");
-////            throw UnknownPostException::withPostId($postId);
-//        }
-//        return $things[0];
     }
+
     public function flush()
     {
         try {
