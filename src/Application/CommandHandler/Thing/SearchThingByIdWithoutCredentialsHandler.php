@@ -18,7 +18,6 @@ class SearchThingByIdWithoutCredentialsHandler
     public function handle(SearchThingByIdWithoutCredentialsCommand $searchThingByIdWithoutCredentialsCommand): Thing
     {
         $id = $searchThingByIdWithoutCredentialsCommand->getId();
-        file_put_contents("/tmp/debug.txt", __METHOD__ . ' ' . __LINE__ . PHP_EOL . var_export("suspender VOY".$id, true) . PHP_EOL, FILE_APPEND);
         $thing = $this->thingRepository->searchThingByIdOrException($id);
 
         return $thing;
