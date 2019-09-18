@@ -1,6 +1,4 @@
-# 6.4.4.2 Retrieve the value of a property
-# GET {wt}/properties/{acceleration}
-
+http GET $IOT_EMULATOR/1/properties/action_name1
 # we assume property name === action name
 GET {{IOT_EMULATOR}}/1/properties/action_name1
 user: user
