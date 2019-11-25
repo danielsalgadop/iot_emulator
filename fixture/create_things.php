@@ -1,7 +1,7 @@
 <?php
 error_reporting(-1);
 
-define('ENDPOINT',getenv("IOT_EMULATOR").'/create');
+define('ENDPOINT',getenv("IOT_EMULATOR"));
 define('PORT',getenv("IOT_EMULATOR_PORT"));
 //define('PORT',8000);
 define('ACTION_PREFIX','action_name');
@@ -18,7 +18,7 @@ function sendCurl($createThingPayload){
     $dataString = json_encode($createThingPayload);
     print_r($dataString);
 
-    $ch = curl_init(ENDPOINT);
+    $ch = curl_init(ENDPOINT.'/create');
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
     curl_setopt($ch, CURLOPT_PORT , PORT);
