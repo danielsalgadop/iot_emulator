@@ -8,6 +8,9 @@ server {
 
         root /var/www/iot_emulator/public;
         index index.php;
+	
+	error_log /var/log/nginx/iot_emulator_error_log
+	access_log /var/log/nginx/iot_emulator_access_log
 
     location / {
         try_files $uri /index.php$is_args$args;
