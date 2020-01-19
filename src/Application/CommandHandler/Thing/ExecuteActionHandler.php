@@ -2,14 +2,12 @@
 
 namespace App\Application\CommandHandler\Thing;
 
-
 use App\Application\Command\Thing\ExecuteActionCommand;
 use App\Domain\Entity\Thing;
 use App\Domain\Repository\ThingRepository;
 
 class ExecuteActionHandler
 {
-
     public function __construct(ThingRepository $thingRepository)
     {
         $this->thingRepository = $thingRepository;
@@ -23,13 +21,12 @@ class ExecuteActionHandler
 
         $arrayOfPropertiesAndValues = $command->getArrayOfPropertyNameAndValue();
 
-        foreach ($thing->getActions() as $action){
+        foreach ($thing->getActions() as $action) {
             $action_name = $action->getName();
-            if($action->getName() === $command->getAction()){
-
+            if ($action->getName() === $command->getAction()) {
                 $property = $action->getProperty();
                 // We are assuming 1 action has 1 property
-                if(!isset($arrayOfPropertiesAndValues[$action_name])){
+                if (!isset($arrayOfPropertiesAndValues[$action_name])) {
                     throw new \Exception("Non-existing Property to update");
                 }
                 $property->setValue($arrayOfPropertiesAndValues[$action_name]);

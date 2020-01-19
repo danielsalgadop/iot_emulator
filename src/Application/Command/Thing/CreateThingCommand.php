@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Application\Command\Thing;
+
 use App\Application\Dto\UserCredentialsDTO;
 
 class CreateThingCommand
@@ -33,14 +34,13 @@ class CreateThingCommand
      * La otra opcion es donde se necesite (en Entity/Thing.php, en este caso) hace $userDto = $command->getUserDTO para
      * obterner $userName = $userDto->getUser
      */
-      public function getUserName(){
-       return $this->userCredentialsDTO->getUser;
-      }
+    public function getUserName()
+    {
+        return $this->userCredentialsDTO->getUser;
+    }
 
-      public function getPassword(){
-       return $this->userCredentialsDTO->getPassword;
-      }
-
-
-
+    public function getPassword()
+    {
+        return $this->userCredentialsDTO->getPassword;
+    }
 }

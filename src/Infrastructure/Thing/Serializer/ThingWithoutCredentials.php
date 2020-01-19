@@ -2,14 +2,13 @@
 
 
 namespace App\Infrastructure\Thing\Serializer;
-use App\Domain\Entity\Thing;
 
+use App\Domain\Entity\Thing;
 
 class ThingWithoutCredentials
 {
-
-
-    public static function asObject(Thing $thing): \stdClass {
+    public static function asObject(Thing $thing): \stdClass
+    {
         $obj = new \stdClass();
 
         $obj->id = $thing->getId();
@@ -17,5 +16,4 @@ class ThingWithoutCredentials
         $obj->brand = $thing->getBrand();
         return $obj;
     }
-
 }

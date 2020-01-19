@@ -20,5 +20,4 @@ class ThingWithCredentials
     {
         return json_encode(self::asObject($thing));
     }
-
 }

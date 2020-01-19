@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Application\Command\Thing;
+
 use App\Application\Dto\UserCredentialsDTO;
 
 class SearchThingByIdCommand

@@ -62,6 +62,5 @@ class Property
         return [
             $class
         ];
-
     }
 }

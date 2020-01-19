@@ -2,7 +2,6 @@
 
 namespace App\Application\CommandHandler\Thing;
 
-
 use App\Application\Command\Thing\CreateThingCommand;
 use App\Domain\Entity\Action;
 use App\Domain\Entity\Thing;
@@ -13,7 +12,6 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 class CreateThingHandler
 {
-
     public function __construct(ThingRepository $thingRepository)
     {
         $this->thingRepository = $thingRepository;
@@ -21,6 +19,6 @@ class CreateThingHandler
 
     public function handle(CreateThingCommand $command):Thing
     {
-        return Thing::createThingFromArray($command->getArray(),$command->getUserDTO());
+        return Thing::createThingFromArray($command->getArray(), $command->getUserDTO());
     }
 }

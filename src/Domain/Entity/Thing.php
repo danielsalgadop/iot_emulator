@@ -53,7 +53,6 @@ class Thing
         foreach ($actionCollector as $action) {
             $this->addAction($action);
         }
-
     }
 
 
@@ -85,7 +84,6 @@ class Thing
             return true;
         }
         foreach ($properties as $propertyNameAndValue) {
-
             foreach ($propertyNameAndValue as $propertyName => $propertyValue) {
                 if (trim($propertyName) === '' || trim($propertyValue) === '') {
                     return false;
@@ -191,7 +189,6 @@ class Thing
 
     public static function hasActionsAndPropertiesConcordance(array $properties, array $actions): bool
     {
-
         if (count($actions) !== count($properties)) {
             return false;
         }

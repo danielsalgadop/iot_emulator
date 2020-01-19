@@ -15,5 +15,4 @@ class SearchThingByIdWithoutCredentialsCommand
     {
         return $this->id;
     }
-
 }

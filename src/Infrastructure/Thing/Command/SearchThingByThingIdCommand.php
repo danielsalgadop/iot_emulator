@@ -11,7 +11,6 @@ use App\Application\Command\Thing\SearchThingByIdCommand;
 use App\Application\CommandHandler\Thing\SearchThingByIdHandler;
 use App\Infrastructure\Thing\Serializer\ThingWithCredentials;
 
-
 class SearchThingByThingIdCommand extends Command
 {
     protected static $defaultName = 'app:Thing:SearchThingByThingId';

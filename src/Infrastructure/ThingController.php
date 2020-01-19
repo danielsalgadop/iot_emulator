@@ -37,7 +37,6 @@ use Exception;
 
 class ThingController extends Controller
 {
-
     private $searchThingByIdHandler;
     private $searchThingByIdWithoutCredentialsHandler;
 
@@ -62,8 +61,6 @@ class ThingController extends Controller
 
     public function getThing(int $id, Request $request): JsonResponse
     {
-
-
         try {
             $thing = $this->searchThingByIdWithoutCredentialsHandler->handle(new SearchThingByIdWithoutCredentialsCommand($id));
         } catch (\Exception $e) {
@@ -103,7 +100,6 @@ class ThingController extends Controller
             $thingRepository->remove($thing);
             $thingRepository->flush();
         } catch (\Exception $e) {
-
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         return new JsonResponse('', 204);
@@ -123,9 +119,7 @@ class ThingController extends Controller
             $thingRepository = $this->get('app.repository.thing');
             $thingRepository->save($thing);
             $thingRepository->flush();
-
         } catch (\Exception $e) {
-
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         return new Response("ddbb updated - thing created with this id " . $thing->getId(), 201);
@@ -133,7 +127,6 @@ class ThingController extends Controller
 
     public function executeAction($id, $action_name, Request $request)
     {
-
         try {
             $this->requestHasUserAndPasswordOrException($request);
             $UserCredentialsDTO = new UserCredentialsDTO($request->headers->get('user'), $request->headers->get('password'));
@@ -147,7 +140,6 @@ class ThingController extends Controller
             $thingRepository = $this->get('app.repository.thing');
             $thingRepository->flush();
         } catch (\Exception $e) {
-
             return new JsonResponse(['error' => $e->getMessage()], 500);
         }
         return new JsonResponse("updated property for id " . $thing->getId(), 204);
@@ -215,7 +207,6 @@ class ThingController extends Controller
     // DUDA, esto es "sospechosamente" MUY parecido a thingRepository->searchThingByIdOrException($id)
     private function getThingByThingIdOrException($id, UserCredentialsDTO $UserCredentialsDTO)
     {
-
         $searchThingByIdCommandHandler = $this->get('app.command_handler.search_thing_by_id');
         $command = new SearchThingByIdCommand($id, $UserCredentialsDTO);
         return $searchThingByIdCommandHandler->handle($command);

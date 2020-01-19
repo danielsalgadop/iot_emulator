@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Application\Command\Thing;
+
 use App\Domain\Entity\Thing;
 
 class ExecuteActionCommand
@@ -34,6 +35,4 @@ class ExecuteActionCommand
     {
         return $this->action;
     }
-
-
 }

@@ -79,6 +79,4 @@ class Action
 
         return $this;
     }
-
-
 }
